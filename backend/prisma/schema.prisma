@@ -1,0 +1,173 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../node_modules/.prisma/client"
+}
+
+datasource db {
+  provider = "mysql"
+}
+
+// =============================================================================
+// CORE MODELS
+// =============================================================================
+
+/// Discord guild (server) registration
+model Guild {
+  id        String   @id /// Discord snowflake ID
+  name      String   @db.VarChar(100)
+  ownerId   String   @db.VarChar(64)
+  iconHash  String?  @db.VarChar(64)
+  settings  Json     @default("{}")
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // Relations
+  addons     GuildAddon[]
+  logConfigs LogConfig[]
+  auditLogs  AuditLog[]
+  secrets    Secret[]
+
+  @@map("guilds")
+}
+
+/// Installed addons (metadata from NPM packages)
+model Addon {
+  id          String   @id /// NPM package name (e.g., @ganjibot/addon-tickets)
+  name        String   @db.VarChar(128)
+  description String?  @db.Text
+  version     String   @db.VarChar(32)
+  author      String?  @db.VarChar(128)
+  homepage    String?  @db.VarChar(256)
+  manifest    Json     /// Addon manifest with permissions, commands, etc.
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  // Relations
+  guilds  GuildAddon[]
+  secrets Secret[]
+
+  @@map("addons")
+}
+
+/// Per-guild addon installation and configuration
+model GuildAddon {
+  guildId   String
+  addonId   String
+  enabled   Boolean  @default(false)
+  config    Json     @default("{}")
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // Relations
+  guild Guild @relation(fields: [guildId], references: [id], onDelete: Cascade)
+  addon Addon @relation(fields: [addonId], references: [id], onDelete: Cascade)
+
+  @@id([guildId, addonId])
+  @@map("guild_addons")
+}
+
+// =============================================================================
+// LOGGING SYSTEM
+// =============================================================================
+
+/// Built-in logging configuration per guild
+model LogConfig {
+  id        Int      @id @default(autoincrement())
+  guildId   String   @db.VarChar(64)
+  logType   LogType
+  channelId String   @db.VarChar(64)
+  enabled   Boolean  @default(true)
+  filters   Json     @default("{}") /// Filter options (e.g., ignore bots, specific channels)
+  format    Json     @default("{}") /// Custom formatting options
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // Relations
+  guild Guild @relation(fields: [guildId], references: [id], onDelete: Cascade)
+
+  @@unique([guildId, logType])
+  @@index([guildId])
+  @@map("log_configs")
+}
+
+/// Types of events that can be logged
+enum LogType {
+  MESSAGE_EDIT
+  MESSAGE_DELETE
+  MESSAGE_BULK_DELETE
+  MEMBER_JOIN
+  MEMBER_LEAVE
+  MEMBER_UPDATE
+  MEMBER_BAN
+  MEMBER_UNBAN
+  ROLE_CREATE
+  ROLE_UPDATE
+  ROLE_DELETE
+  CHANNEL_CREATE
+  CHANNEL_UPDATE
+  CHANNEL_DELETE
+  VOICE_STATE
+  INVITE_CREATE
+  INVITE_DELETE
+  MODERATION
+}
+
+/// Audit log for bot actions and security events
+model AuditLog {
+  id        Int      @id @default(autoincrement())
+  guildId   String   @db.VarChar(64)
+  userId    String   @db.VarChar(64) /// User who triggered the action
+  action    String   @db.VarChar(64) /// Action type (e.g., ADDON_INSTALLED, CONFIG_CHANGED)
+  target    String?  @db.VarChar(256) /// Target of the action (e.g., addon ID, setting name)
+  details   Json? /// Additional context
+  ipAddress String?  @db.VarChar(45) /// IP for web dashboard actions
+  createdAt DateTime @default(now())
+
+  // Relations
+  guild Guild @relation(fields: [guildId], references: [id], onDelete: Cascade)
+
+  @@index([guildId, createdAt])
+  @@index([userId])
+  @@map("audit_logs")
+}
+
+// =============================================================================
+// AUTHENTICATION & SESSIONS
+// =============================================================================
+
+/// User sessions for dashboard authentication
+model Session {
+  id           String   @id @default(uuid())
+  userId       String   @db.VarChar(64) /// Discord user ID
+  accessToken  String   @db.Text /// Discord OAuth access token (encrypted)
+  refreshToken String   @db.Text /// Discord OAuth refresh token (encrypted)
+  expiresAt    DateTime
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  @@index([userId])
+  @@index([expiresAt])
+  @@map("sessions")
+}
+
+// =============================================================================
+// SECRETS MANAGEMENT
+// =============================================================================
+
+/// Encrypted secrets for addons (API keys, tokens, etc.)
+model Secret {
+  id        Int      @id @default(autoincrement())
+  guildId   String   @db.VarChar(64)
+  addonId   String?  @db.VarChar(128) /// Null for core secrets
+  key       String   @db.VarChar(128)
+  value     String   @db.Text /// Encrypted value
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // Relations
+  guild Guild  @relation(fields: [guildId], references: [id], onDelete: Cascade)
+  addon Addon? @relation(fields: [addonId], references: [id], onDelete: Cascade)
+
+  @@unique([guildId, addonId, key])
+  @@map("secrets")
+}

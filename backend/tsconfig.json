@@ -1,0 +1,57 @@
+{
+    "compilerOptions": {
+        "target": "ES2022",
+        "module": "NodeNext",
+        "moduleResolution": "NodeNext",
+        "lib": [
+            "ES2022"
+        ],
+        "outDir": "./dist",
+        "rootDir": "./src",
+        "strict": true,
+        "esModuleInterop": true,
+        "skipLibCheck": true,
+        "forceConsistentCasingInFileNames": true,
+        "resolveJsonModule": true,
+        "declaration": true,
+        "declarationMap": true,
+        "sourceMap": true,
+        "noImplicitReturns": true,
+        "noFallthroughCasesInSwitch": true,
+        "noUncheckedIndexedAccess": true,
+        "noImplicitOverride": true,
+        "exactOptionalPropertyTypes": true,
+        "paths": {
+            "@/*": [
+                "./src/*"
+            ],
+            "@bot/*": [
+                "./src/bot/*"
+            ],
+            "@addons/*": [
+                "./src/addons/*"
+            ],
+            "@api/*": [
+                "./src/api/*"
+            ],
+            "@database/*": [
+                "./src/database/*"
+            ],
+            "@logging/*": [
+                "./src/logging/*"
+            ],
+            "@config/*": [
+                "./src/config/*"
+            ]
+        },
+        "baseUrl": "."
+    },
+    "include": [
+        "src/**/*"
+    ],
+    "exclude": [
+        "node_modules",
+        "dist",
+        "**/*.test.ts"
+    ]
+}

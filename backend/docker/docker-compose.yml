@@ -1,0 +1,43 @@
+/**
+ * Docker Compose configuration for local development
+ */
+services:
+  # MariaDB Database
+  db:
+    image: mariadb:11
+    container_name: ganjibot-db
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpassword
+      MYSQL_DATABASE: ganjibot
+      MYSQL_USER: ganjibot
+      MYSQL_PASSWORD: ganjibot
+    ports:
+      - "3306:3306"
+    volumes:
+      - db_data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "healthcheck.sh", "--connect", "--innodb_initialized"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # Bot service (for development, run with npm run dev instead)
+  # bot:
+  #   build:
+  #     context: ..
+  #     dockerfile: docker/Dockerfile
+  #   container_name: ganjibot
+  #   restart: unless-stopped
+  #   depends_on:
+  #     db:
+  #       condition: service_healthy
+  #   environment:
+  #     DATABASE_URL: mysql://ganjibot:ganjibot@db:3306/ganjibot
+  #   env_file:
+  #     - ../.env
+  #   ports:
+  #     - "3000:3000"
+
+volumes:
+  db_data:
