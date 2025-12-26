@@ -1,0 +1,38 @@
+.dashboard-header {
+    margin-bottom: var(--space-xl);
+}
+
+.dashboard-header h1 {
+    font-size: var(--text-3xl);
+    font-weight: var(--font-bold);
+    color: var(--color-text-primary);
+    margin-bottom: var(--space-xs);
+}
+
+.dashboard-header p {
+    color: var(--color-text-muted);
+}
+
+.guild-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: var(--space-lg);
+}
+
+.guild-card {
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    padding: var(--space-lg);
+    transition: all var(--transition-fast) var(--ease-out);
+}
+
+.guild-card:hover:not(.placeholder) {
+    border-color: var(--color-brand-500);
+    box-shadow: var(--shadow-md);
+}
+
+.guild-card.placeholder {
+    text-align: center;
+    color: var(--color-text-muted);
+}

@@ -1,0 +1,58 @@
+.login-page {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--color-background);
+}
+
+.login-card {
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-xl);
+    padding: var(--space-2xl);
+    text-align: center;
+    box-shadow: var(--shadow-lg);
+    max-width: 400px;
+    width: 100%;
+}
+
+.login-header {
+    margin-bottom: var(--space-xl);
+}
+
+.login-icon {
+    font-size: 4rem;
+    display: block;
+    margin-bottom: var(--space-md);
+}
+
+.login-header h1 {
+    font-size: var(--text-2xl);
+    font-weight: var(--font-bold);
+    color: var(--color-text-primary);
+    margin-bottom: var(--space-sm);
+}
+
+.login-header p {
+    color: var(--color-text-muted);
+}
+
+.btn-discord {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-sm);
+    background: #5865f2;
+    color: white;
+    padding: var(--space-md) var(--space-xl);
+    border-radius: var(--radius-md);
+    font-weight: var(--font-semibold);
+    font-size: var(--text-base);
+    transition: background var(--transition-fast) var(--ease-out);
+    width: 100%;
+}
+
+.btn-discord:hover {
+    background: #4752c4;
+}

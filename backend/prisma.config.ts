@@ -1,13 +1,20 @@
 /// <reference types="node" />
 /**
  * Prisma Configuration for Prisma 7+
- * Database URL is now configured here instead of schema.prisma
+ * Database URL is built from component variables for consistency
  */
 
+import 'dotenv/config';
 import { defineConfig } from 'prisma/config';
 
-// Use a default URL for prisma generate (actual connection uses adapter in code)
-const databaseUrl = process.env.DATABASE_URL ?? 'mysql://localhost:3306/ganjibot';
+// Build DATABASE_URL from component variables
+const host = process.env.DATABASE_HOST ?? 'localhost';
+const port = process.env.DATABASE_PORT ?? '3306';
+const user = process.env.DATABASE_USER ?? 'ganjibot';
+const password = process.env.DATABASE_PASSWORD ?? '';
+const database = process.env.DATABASE_NAME ?? 'ganjibot';
+
+const databaseUrl = `mysql://${user}:${encodeURIComponent(password)}@${host}:${port}/${database}`;
 
 export default defineConfig({
     schema: 'prisma/schema.prisma',
@@ -18,3 +25,4 @@ export default defineConfig({
         url: databaseUrl,
     },
 });
+

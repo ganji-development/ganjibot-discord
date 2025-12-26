@@ -1,0 +1,141 @@
+/**
+ * Ganjibot Dashboard - CSS Variables
+ * Design system tokens for consistent styling
+ * Based on Ganji Development brand guidelines
+ */
+
+:root {
+    /* ============================================
+     BRAND COLORS (Green Theme)
+     ============================================ */
+
+    --color-brand-900: #004a00;
+    --color-brand-800: #0f350f;
+    --color-brand-700: #1a5c1a;
+    --color-brand-600: #3d8a3e;
+    --color-brand-500: #5fbc60;
+    --color-brand-400: #7ad27b;
+    --color-brand-300: #9ee09f;
+    --color-brand-200: #b8e5b9;
+    --color-brand-100: #d9f0da;
+
+    /* RGB for alpha usage */
+    --color-brand-500-rgb: 95, 188, 96;
+
+    /* ============================================
+     SEMANTIC COLORS
+     ============================================ */
+
+    --color-success: #22c55e;
+    --color-warning: #f59e0b;
+    --color-error: #ef4444;
+    --color-info: #3b82f6;
+
+    /* ============================================
+     THEME COLORS (Light Mode)
+     ============================================ */
+
+    --color-background: #f5f9f5;
+    --color-surface: #ffffff;
+    --color-surface-elevated: #ffffff;
+    --color-surface-muted: #eef6ef;
+
+    --color-text-primary: #123212;
+    --color-text-secondary: #2f5b2f;
+    --color-text-muted: #6b8a6b;
+
+    --color-border: #d1e4d1;
+    --color-border-light: #e8f3e8;
+
+    /* ============================================
+     TYPOGRAPHY
+     ============================================ */
+
+    --font-primary: 'Inter', system-ui, sans-serif;
+    --font-mono: 'Fira Code', monospace;
+
+    --text-xs: 0.75rem;
+    --text-sm: 0.875rem;
+    --text-base: 1rem;
+    --text-lg: 1.125rem;
+    --text-xl: 1.25rem;
+    --text-2xl: 1.5rem;
+    --text-3xl: 1.875rem;
+    --text-4xl: 2.25rem;
+
+    --font-normal: 400;
+    --font-medium: 500;
+    --font-semibold: 600;
+    --font-bold: 700;
+
+    /* ============================================
+     SPACING
+     ============================================ */
+
+    --space-xs: 0.25rem;
+    --space-sm: 0.5rem;
+    --space-md: 1rem;
+    --space-lg: 1.5rem;
+    --space-xl: 2rem;
+    --space-2xl: 3rem;
+
+    /* ============================================
+     BORDER RADIUS
+     ============================================ */
+
+    --radius-sm: 0.25rem;
+    --radius-md: 0.5rem;
+    --radius-lg: 0.75rem;
+    --radius-xl: 1rem;
+    --radius-full: 9999px;
+
+    /* ============================================
+     SHADOWS
+     ============================================ */
+
+    --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
+    --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.1);
+    --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.1);
+    --shadow-xl: 0 20px 25px rgba(0, 0, 0, 0.15);
+
+    /* ============================================
+     TRANSITIONS
+     ============================================ */
+
+    --transition-fast: 150ms;
+    --transition-base: 200ms;
+    --transition-slow: 300ms;
+    --ease-out: cubic-bezier(0, 0, 0.2, 1);
+
+    /* ============================================
+     Z-INDEX
+     ============================================ */
+
+    --z-dropdown: 100;
+    --z-sticky: 200;
+    --z-modal: 600;
+    --z-tooltip: 800;
+}
+
+/* ============================================
+   DARK MODE
+   ============================================ */
+
+:root[data-theme='dark'] {
+    --color-background: #0b120c;
+    --color-surface: #131d14;
+    --color-surface-elevated: #1f4a1f;
+    --color-surface-muted: #19281a;
+
+    --color-text-primary: #e5f6e5;
+    --color-text-secondary: #c5e8c5;
+    --color-text-muted: #8ab58a;
+
+    --color-border: #2d5a2d;
+    --color-border-light: #1f4a1f;
+
+    --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.3);
+    --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.4);
+    --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.5);
+    --shadow-xl: 0 20px 25px rgba(0, 0, 0, 0.6);
+}

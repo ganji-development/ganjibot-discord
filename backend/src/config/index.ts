@@ -17,12 +17,17 @@ const configSchema = z.object({
     }),
 
     database: z.object({
-        url: z.string().min(1, 'DATABASE_URL is required'),
+        host: z.string().default('localhost'),
+        port: z.coerce.number().int().positive().default(3306),
+        user: z.string().min(1, 'DATABASE_USER is required'),
+        password: z.string().default(''),
+        name: z.string().min(1, 'DATABASE_NAME is required'),
+        connectionLimit: z.coerce.number().int().positive().default(10),
     }),
 
     api: z.object({
         port: z.coerce.number().int().positive().default(3000),
-        baseUrl: z.string().url().default('http://localhost:3000'),
+        baseUrl: z.url().default('http://localhost:3000'),
     }),
 
     jwt: z.object({
@@ -31,7 +36,7 @@ const configSchema = z.object({
     }),
 
     dashboard: z.object({
-        url: z.string().url().default('http://localhost:5173'),
+        url: z.url().default('http://localhost:5173'),
     }),
 
     logging: z.object({
@@ -50,8 +55,8 @@ const configSchema = z.object({
         .optional(),
 
     addons: z.object({
-        npmRegistryUrl: z.string().url().optional(),
-        npmAuthToken: z.string().optional(),
+        npmRegistryUrl: z.union([z.url(), z.literal('')]).optional().transform(v => v || undefined),
+        npmAuthToken: z.string().optional().transform(v => v || undefined),
         localAddonsDir: z.string().default('./addons'),
     }),
 });
@@ -70,7 +75,12 @@ function loadConfig(): Config {
         },
 
         database: {
-            url: process.env.DATABASE_URL,
+            host: process.env.DATABASE_HOST,
+            port: process.env.DATABASE_PORT,
+            user: process.env.DATABASE_USER,
+            password: process.env.DATABASE_PASSWORD,
+            name: process.env.DATABASE_NAME,
+            connectionLimit: process.env.DATABASE_CONNECTION_LIMIT,
         },
 
         api: {

@@ -4,6 +4,7 @@
  */
 
 import { createLogger } from '../logging/index.js';
+import { prisma } from '../database/index.js';
 import { AddonLoader } from './AddonLoader.js';
 import { AddonRegistry } from './AddonRegistry.js';
 import { PermissionEnforcer } from './PermissionEnforcer.js';
@@ -38,8 +39,33 @@ export class AddonManager {
 
         logger.info('Initializing addon manager...');
 
-        // TODO: Load installed addons from database
-        // For now, just mark as initialized
+        // Load installed addons from database
+        try {
+            const installedAddons = await prisma.addon.findMany();
+
+            for (const dbAddon of installedAddons) {
+                try {
+                    // id is the package name
+                    const addon = await this.loader.load(dbAddon.id);
+                    this.registry.register(addon);
+
+                    // Load guild-specific enabled states
+                    const guildAddons = await prisma.guildAddon.findMany({
+                        where: { addonId: dbAddon.id, enabled: true },
+                    });
+
+                    for (const ga of guildAddons) {
+                        this.registry.enableForGuild(addon.id, ga.guildId);
+                    }
+
+                    logger.info({ name: addon.manifest.name }, 'Addon loaded from database');
+                } catch (error) {
+                    logger.error({ error, packageName: dbAddon.id }, 'Failed to load addon');
+                }
+            }
+        } catch (error) {
+            logger.error({ error }, 'Failed to load addons from database');
+        }
 
         this.initialized = true;
         logger.info('Addon manager initialized');
@@ -56,6 +82,26 @@ export class AddonManager {
 
         // Validate permissions
         this.permissionEnforcer.validate(addon.manifest);
+
+        // Persist to database (id = packageName)
+        await prisma.addon.upsert({
+            where: { id: addon.id },
+            create: {
+                id: addon.id,
+                name: addon.manifest.name,
+                version: addon.manifest.version,
+                description: addon.manifest.description,
+                author: addon.manifest.author,
+                manifest: JSON.parse(JSON.stringify(addon.manifest)),
+            },
+            update: {
+                name: addon.manifest.name,
+                version: addon.manifest.version,
+                description: addon.manifest.description,
+                author: addon.manifest.author,
+                manifest: JSON.parse(JSON.stringify(addon.manifest)),
+            },
+        });
 
         // Register the addon
         this.registry.register(addon);
@@ -85,6 +131,16 @@ export class AddonManager {
             await addon.instance.onUnload();
         }
 
+        // Remove all guild associations first (foreign key)
+        await prisma.guildAddon.deleteMany({
+            where: { addonId },
+        });
+
+        // Remove addon from database
+        await prisma.addon.delete({
+            where: { id: addonId },
+        });
+
         // Unregister the addon
         this.registry.unregister(addonId);
 
@@ -101,6 +157,13 @@ export class AddonManager {
         if (!addon) {
             throw new Error(`Addon not found: ${addonId}`);
         }
+
+        // Persist to database
+        await prisma.guildAddon.upsert({
+            where: { guildId_addonId: { guildId, addonId } },
+            create: { guildId, addonId, enabled: true },
+            update: { enabled: true },
+        });
 
         // Call onEnable lifecycle hook
         if (addon.instance.onEnable) {
@@ -126,6 +189,12 @@ export class AddonManager {
         if (!addon) {
             throw new Error(`Addon not found: ${addonId}`);
         }
+
+        // Persist to database
+        await prisma.guildAddon.update({
+            where: { guildId_addonId: { guildId, addonId } },
+            data: { enabled: false },
+        });
 
         // Call onDisable lifecycle hook
         if (addon.instance.onDisable) {
@@ -166,3 +235,4 @@ export class AddonManager {
         return this.registry;
     }
 }
+

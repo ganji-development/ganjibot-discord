@@ -6,6 +6,9 @@
  * @copyright 2024 Ganji Development
  */
 
+// Load environment variables FIRST
+import 'dotenv/config';
+
 import { config } from './config/index.js';
 import { createLogger } from './logging/index.js';
 import { createClient } from './bot/index.js';

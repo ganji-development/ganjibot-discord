@@ -69,16 +69,16 @@ This document tracks the progress of the Ganjibot-Discord project, a modular Dis
 
 ---
 
-## Phase 5: Addon Manager ⚠️ SCAFFOLDED
+## Phase 5: Addon Manager ✅ COMPLETE
 
 | Task | Status | Notes |
 |------|--------|-------|
-| AddonManager (`src/addons/AddonManager.ts`) | ⚠️ Scaffolded | Lifecycle management |
-| AddonLoader (`src/addons/AddonLoader.ts`) | ⚠️ Scaffolded | NPM package loading |
-| AddonRegistry (`src/addons/AddonRegistry.ts`) | ⚠️ Scaffolded | State tracking |
-| PermissionEnforcer (`src/addons/PermissionEnforcer.ts`) | ⚠️ Scaffolded | Security validation |
-| Addon types (`src/addons/types.ts`) | ⚠️ Scaffolded | TypeScript interfaces |
-| Hot-reload for development | ❌ Not Started | |
+| AddonManager (`src/addons/AddonManager.ts`) | ✅ Done | Lifecycle + DB integration |
+| AddonLoader (`src/addons/AddonLoader.ts`) | ✅ Done | NPM package loading |
+| AddonRegistry (`src/addons/AddonRegistry.ts`) | ✅ Done | State tracking |
+| PermissionEnforcer (`src/addons/PermissionEnforcer.ts`) | ✅ Done | Security validation |
+| Addon types (`src/addons/types.ts`) | ✅ Done | TypeScript interfaces |
+| Hot-reload for development | ⏸️ Deferred | |
 
 ---
 
@@ -99,18 +99,18 @@ This document tracks the progress of the Ganjibot-Discord project, a modular Dis
 
 ---
 
-## Phase 7: Web Dashboard (Frontend) ❌ NOT STARTED
+## Phase 7: Web Dashboard (Frontend) 🔄 IN PROGRESS
 
 | Task | Status | Notes |
 |------|--------|-------|
-| Initialize React + Vite + TypeScript | ❌ | `frontend/` directory |
-| Set up Tailwind CSS | ❌ | |
-| Apollo Client for GraphQL | ❌ | |
-| Login page (Discord OAuth) | ❌ | |
-| Dashboard home (server list) | ❌ | |
-| Guild settings page | ❌ | |
-| Logging configuration page | ❌ | |
-| Addon browser/management page | ❌ | |
+| Initialize React + Vite + TypeScript | ✅ Done | Vite 7, React 19 |
+| Set up CSS with variables | ✅ Done | Custom variables.css |
+| Apollo Client for GraphQL | ✅ Done | v4.0.11 with JWT auth |
+| Login page (Discord OAuth) | ✅ Done | |
+| Dashboard home (server list) | ✅ Done | Skeleton |
+| Guild settings page | ✅ Done | Skeleton |
+| Logging configuration page | ⚠️ Stub | Needs form |
+| Addon browser/management page | ⚠️ Stub | Needs API integration |
 
 ---
 

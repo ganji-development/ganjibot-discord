@@ -5,7 +5,7 @@
  */
 
 import 'dotenv/config';
-import * as PrismaModule from '@prisma/client';
+import { PrismaClient } from '../generated/prisma/client.js';
 import { PrismaMariaDb } from '@prisma/adapter-mariadb';
 import { exec } from 'child_process';
 import { promisify } from 'util';
@@ -25,8 +25,7 @@ const adapter = new PrismaMariaDb({
 });
 
 // Create Prisma client with adapter (Prisma 7 pattern)
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-export const prisma = new (PrismaModule as any).PrismaClient({ adapter });
+export const prisma = new PrismaClient({ adapter });
 
 /**
  * Synchronize database schema with Prisma schema
@@ -45,7 +44,7 @@ export async function syncDatabaseSchema(): Promise<void> {
         // Run prisma db push to sync schema
         // --accept-data-loss is NOT used - will fail if destructive changes are needed
         // This ensures data safety while still syncing additive changes
-        const { stdout, stderr } = await execAsync('npx prisma db push --skip-generate', {
+        const { stdout, stderr } = await execAsync('npx prisma db push', {
             env: { ...process.env },
             cwd: process.cwd(),
         });
@@ -133,5 +132,3 @@ export async function initializeDatabase(): Promise<void> {
     // Validate the schema
     await validateDatabase();
 }
-
-export type PrismaClient = typeof prisma;
