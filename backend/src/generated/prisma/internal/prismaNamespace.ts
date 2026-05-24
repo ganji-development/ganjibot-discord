@@ -385,12 +385,13 @@ type FieldRefInputType<Model, FieldType> = Model extends never ? never : FieldRe
 
 export const ModelName = {
   Guild: 'Guild',
+  GuildAccess: 'GuildAccess',
   Addon: 'Addon',
   GuildAddon: 'GuildAddon',
-  LogConfig: 'LogConfig',
   AuditLog: 'AuditLog',
   Session: 'Session',
-  Secret: 'Secret'
+  Secret: 'Secret',
+  LogConfig: 'LogConfig'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -406,7 +407,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "guild" | "addon" | "guildAddon" | "logConfig" | "auditLog" | "session" | "secret"
+    modelProps: "guild" | "guildAccess" | "addon" | "guildAddon" | "auditLog" | "session" | "secret" | "logConfig"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -473,6 +474,72 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         count: {
           args: Prisma.GuildCountArgs<ExtArgs>
           result: runtime.Types.Utils.Optional<Prisma.GuildCountAggregateOutputType> | number
+        }
+      }
+    }
+    GuildAccess: {
+      payload: Prisma.$GuildAccessPayload<ExtArgs>
+      fields: Prisma.GuildAccessFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.GuildAccessFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$GuildAccessPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.GuildAccessFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$GuildAccessPayload>
+        }
+        findFirst: {
+          args: Prisma.GuildAccessFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$GuildAccessPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.GuildAccessFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$GuildAccessPayload>
+        }
+        findMany: {
+          args: Prisma.GuildAccessFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$GuildAccessPayload>[]
+        }
+        create: {
+          args: Prisma.GuildAccessCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$GuildAccessPayload>
+        }
+        createMany: {
+          args: Prisma.GuildAccessCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        delete: {
+          args: Prisma.GuildAccessDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$GuildAccessPayload>
+        }
+        update: {
+          args: Prisma.GuildAccessUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$GuildAccessPayload>
+        }
+        deleteMany: {
+          args: Prisma.GuildAccessDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.GuildAccessUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        upsert: {
+          args: Prisma.GuildAccessUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$GuildAccessPayload>
+        }
+        aggregate: {
+          args: Prisma.GuildAccessAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateGuildAccess>
+        }
+        groupBy: {
+          args: Prisma.GuildAccessGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.GuildAccessGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.GuildAccessCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.GuildAccessCountAggregateOutputType> | number
         }
       }
     }
@@ -605,72 +672,6 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         count: {
           args: Prisma.GuildAddonCountArgs<ExtArgs>
           result: runtime.Types.Utils.Optional<Prisma.GuildAddonCountAggregateOutputType> | number
-        }
-      }
-    }
-    LogConfig: {
-      payload: Prisma.$LogConfigPayload<ExtArgs>
-      fields: Prisma.LogConfigFieldRefs
-      operations: {
-        findUnique: {
-          args: Prisma.LogConfigFindUniqueArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$LogConfigPayload> | null
-        }
-        findUniqueOrThrow: {
-          args: Prisma.LogConfigFindUniqueOrThrowArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$LogConfigPayload>
-        }
-        findFirst: {
-          args: Prisma.LogConfigFindFirstArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$LogConfigPayload> | null
-        }
-        findFirstOrThrow: {
-          args: Prisma.LogConfigFindFirstOrThrowArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$LogConfigPayload>
-        }
-        findMany: {
-          args: Prisma.LogConfigFindManyArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$LogConfigPayload>[]
-        }
-        create: {
-          args: Prisma.LogConfigCreateArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$LogConfigPayload>
-        }
-        createMany: {
-          args: Prisma.LogConfigCreateManyArgs<ExtArgs>
-          result: BatchPayload
-        }
-        delete: {
-          args: Prisma.LogConfigDeleteArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$LogConfigPayload>
-        }
-        update: {
-          args: Prisma.LogConfigUpdateArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$LogConfigPayload>
-        }
-        deleteMany: {
-          args: Prisma.LogConfigDeleteManyArgs<ExtArgs>
-          result: BatchPayload
-        }
-        updateMany: {
-          args: Prisma.LogConfigUpdateManyArgs<ExtArgs>
-          result: BatchPayload
-        }
-        upsert: {
-          args: Prisma.LogConfigUpsertArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$LogConfigPayload>
-        }
-        aggregate: {
-          args: Prisma.LogConfigAggregateArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.AggregateLogConfig>
-        }
-        groupBy: {
-          args: Prisma.LogConfigGroupByArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.LogConfigGroupByOutputType>[]
-        }
-        count: {
-          args: Prisma.LogConfigCountArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.LogConfigCountAggregateOutputType> | number
         }
       }
     }
@@ -872,6 +873,72 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    LogConfig: {
+      payload: Prisma.$LogConfigPayload<ExtArgs>
+      fields: Prisma.LogConfigFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.LogConfigFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LogConfigPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.LogConfigFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LogConfigPayload>
+        }
+        findFirst: {
+          args: Prisma.LogConfigFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LogConfigPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.LogConfigFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LogConfigPayload>
+        }
+        findMany: {
+          args: Prisma.LogConfigFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LogConfigPayload>[]
+        }
+        create: {
+          args: Prisma.LogConfigCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LogConfigPayload>
+        }
+        createMany: {
+          args: Prisma.LogConfigCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        delete: {
+          args: Prisma.LogConfigDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LogConfigPayload>
+        }
+        update: {
+          args: Prisma.LogConfigUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LogConfigPayload>
+        }
+        deleteMany: {
+          args: Prisma.LogConfigDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.LogConfigUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        upsert: {
+          args: Prisma.LogConfigUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LogConfigPayload>
+        }
+        aggregate: {
+          args: Prisma.LogConfigAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateLogConfig>
+        }
+        groupBy: {
+          args: Prisma.LogConfigGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.LogConfigGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.LogConfigCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.LogConfigCountAggregateOutputType> | number
+        }
+      }
+    }
   }
 } & {
   other: {
@@ -924,6 +991,19 @@ export const GuildScalarFieldEnum = {
 export type GuildScalarFieldEnum = (typeof GuildScalarFieldEnum)[keyof typeof GuildScalarFieldEnum]
 
 
+export const GuildAccessScalarFieldEnum = {
+  id: 'id',
+  guildId: 'guildId',
+  userId: 'userId',
+  roleId: 'roleId',
+  level: 'level',
+  grantedBy: 'grantedBy',
+  createdAt: 'createdAt'
+} as const
+
+export type GuildAccessScalarFieldEnum = (typeof GuildAccessScalarFieldEnum)[keyof typeof GuildAccessScalarFieldEnum]
+
+
 export const AddonScalarFieldEnum = {
   id: 'id',
   name: 'name',
@@ -949,21 +1029,6 @@ export const GuildAddonScalarFieldEnum = {
 } as const
 
 export type GuildAddonScalarFieldEnum = (typeof GuildAddonScalarFieldEnum)[keyof typeof GuildAddonScalarFieldEnum]
-
-
-export const LogConfigScalarFieldEnum = {
-  id: 'id',
-  guildId: 'guildId',
-  logType: 'logType',
-  channelId: 'channelId',
-  enabled: 'enabled',
-  filters: 'filters',
-  format: 'format',
-  createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
-} as const
-
-export type LogConfigScalarFieldEnum = (typeof LogConfigScalarFieldEnum)[keyof typeof LogConfigScalarFieldEnum]
 
 
 export const AuditLogScalarFieldEnum = {
@@ -1004,6 +1069,25 @@ export const SecretScalarFieldEnum = {
 } as const
 
 export type SecretScalarFieldEnum = (typeof SecretScalarFieldEnum)[keyof typeof SecretScalarFieldEnum]
+
+
+export const LogConfigScalarFieldEnum = {
+  id: 'id',
+  guildId: 'guildId',
+  modLogChannelId: 'modLogChannelId',
+  serverLogChannelId: 'serverLogChannelId',
+  voiceLogChannelId: 'voiceLogChannelId',
+  joinLeaveLogChannelId: 'joinLeaveLogChannelId',
+  commandLogChannelId: 'commandLogChannelId',
+  logMessages: 'logMessages',
+  logMembers: 'logMembers',
+  logVoice: 'logVoice',
+  logModeration: 'logModeration',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type LogConfigScalarFieldEnum = (typeof LogConfigScalarFieldEnum)[keyof typeof LogConfigScalarFieldEnum]
 
 
 export const SortOrder = {
@@ -1064,6 +1148,16 @@ export const GuildOrderByRelevanceFieldEnum = {
 export type GuildOrderByRelevanceFieldEnum = (typeof GuildOrderByRelevanceFieldEnum)[keyof typeof GuildOrderByRelevanceFieldEnum]
 
 
+export const GuildAccessOrderByRelevanceFieldEnum = {
+  guildId: 'guildId',
+  userId: 'userId',
+  roleId: 'roleId',
+  grantedBy: 'grantedBy'
+} as const
+
+export type GuildAccessOrderByRelevanceFieldEnum = (typeof GuildAccessOrderByRelevanceFieldEnum)[keyof typeof GuildAccessOrderByRelevanceFieldEnum]
+
+
 export const AddonOrderByRelevanceFieldEnum = {
   id: 'id',
   name: 'name',
@@ -1082,14 +1176,6 @@ export const GuildAddonOrderByRelevanceFieldEnum = {
 } as const
 
 export type GuildAddonOrderByRelevanceFieldEnum = (typeof GuildAddonOrderByRelevanceFieldEnum)[keyof typeof GuildAddonOrderByRelevanceFieldEnum]
-
-
-export const LogConfigOrderByRelevanceFieldEnum = {
-  guildId: 'guildId',
-  channelId: 'channelId'
-} as const
-
-export type LogConfigOrderByRelevanceFieldEnum = (typeof LogConfigOrderByRelevanceFieldEnum)[keyof typeof LogConfigOrderByRelevanceFieldEnum]
 
 
 export const AuditLogOrderByRelevanceFieldEnum = {
@@ -1121,6 +1207,18 @@ export const SecretOrderByRelevanceFieldEnum = {
 } as const
 
 export type SecretOrderByRelevanceFieldEnum = (typeof SecretOrderByRelevanceFieldEnum)[keyof typeof SecretOrderByRelevanceFieldEnum]
+
+
+export const LogConfigOrderByRelevanceFieldEnum = {
+  guildId: 'guildId',
+  modLogChannelId: 'modLogChannelId',
+  serverLogChannelId: 'serverLogChannelId',
+  voiceLogChannelId: 'voiceLogChannelId',
+  joinLeaveLogChannelId: 'joinLeaveLogChannelId',
+  commandLogChannelId: 'commandLogChannelId'
+} as const
+
+export type LogConfigOrderByRelevanceFieldEnum = (typeof LogConfigOrderByRelevanceFieldEnum)[keyof typeof LogConfigOrderByRelevanceFieldEnum]
 
 
 
@@ -1158,13 +1256,6 @@ export type DateTimeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel
 
 
 /**
- * Reference to a field of type 'Boolean'
- */
-export type BooleanFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Boolean'>
-    
-
-
-/**
  * Reference to a field of type 'Int'
  */
 export type IntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Int'>
@@ -1172,9 +1263,16 @@ export type IntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'In
 
 
 /**
- * Reference to a field of type 'LogType'
+ * Reference to a field of type 'AccessLevel'
  */
-export type EnumLogTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'LogType'>
+export type EnumAccessLevelFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'AccessLevel'>
+    
+
+
+/**
+ * Reference to a field of type 'Boolean'
+ */
+export type BooleanFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Boolean'>
     
 
 
@@ -1280,12 +1378,13 @@ export type PrismaClientOptions = ({
 }
 export type GlobalOmitConfig = {
   guild?: Prisma.GuildOmit
+  guildAccess?: Prisma.GuildAccessOmit
   addon?: Prisma.AddonOmit
   guildAddon?: Prisma.GuildAddonOmit
-  logConfig?: Prisma.LogConfigOmit
   auditLog?: Prisma.AuditLogOmit
   session?: Prisma.SessionOmit
   secret?: Prisma.SecretOmit
+  logConfig?: Prisma.LogConfigOmit
 }
 
 /* Types for Logging */

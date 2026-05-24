@@ -1,0 +1,111 @@
+.settings-form {
+    background: var(--card-bg, #1a1a2e);
+    border: 1px solid var(--border-color, #333);
+    border-radius: 8px;
+    padding: 1.5rem;
+}
+
+.settings-form-title {
+    margin: 0 0 1.5rem 0;
+    font-size: 1.25rem;
+    color: var(--text-primary, #fff);
+    padding-bottom: 1rem;
+    border-bottom: 1px solid var(--border-color, #333);
+}
+
+.settings-fields {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+}
+
+.settings-field {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.settings-field > label {
+    font-weight: 600;
+    color: var(--text-primary, #fff);
+    font-size: 0.9rem;
+}
+
+.settings-field input[type="text"],
+.settings-field input[type="number"],
+.settings-field textarea,
+.settings-field select {
+    padding: 0.75rem;
+    border: 1px solid var(--border-color, #333);
+    border-radius: 4px;
+    background: var(--bg-secondary, #0d0d14);
+    color: var(--text-primary, #fff);
+    font-size: 0.95rem;
+    transition: border-color 0.2s;
+}
+
+.settings-field input:focus,
+.settings-field textarea:focus,
+.settings-field select:focus {
+    outline: none;
+    border-color: var(--primary, #5865f2);
+}
+
+.settings-field textarea {
+    resize: vertical;
+    min-height: 80px;
+}
+
+.checkbox-label {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    cursor: pointer;
+}
+
+.checkbox-label input[type="checkbox"] {
+    width: 18px;
+    height: 18px;
+    accent-color: var(--primary, #5865f2);
+}
+
+.checkbox-text {
+    color: var(--text-secondary, #999);
+    font-size: 0.9rem;
+}
+
+.field-description {
+    margin: 0;
+    font-size: 0.85rem;
+    color: var(--text-secondary, #999);
+}
+
+.settings-actions {
+    display: flex;
+    gap: 0.75rem;
+    justify-content: flex-end;
+    margin-top: 1.5rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--border-color, #333);
+}
+
+.btn-secondary {
+    background: var(--bg-tertiary, #2a2a4a);
+    color: var(--text-primary, #fff);
+    border: none;
+    padding: 0.6rem 1.25rem;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: 500;
+    transition: background 0.2s;
+}
+
+.btn-secondary:hover:not(:disabled) {
+    background: var(--bg-secondary, #0d0d14);
+}
+
+.btn-secondary:disabled,
+.btn-primary:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}

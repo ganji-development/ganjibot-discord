@@ -8,19 +8,14 @@ import {
     GatewayIntentBits,
     Partials,
     type ClientEvents,
+    type Guild,
 } from 'discord.js';
 import { createLogger } from '../logging/index.js';
-import { LogService } from '../logging/LogService.js';
-import {
-    registerMessageLoggers,
-    registerMemberLoggers,
-    registerVoiceLoggers,
-    registerModerationLoggers,
-} from '../logging/loggers/index.js';
 import { EventDispatcher } from './EventDispatcher.js';
 import { CommandHandler } from './CommandHandler.js';
 import type { AddonManager } from '../addons/index.js';
-import { pingCommand, helpCommand, infoCommand } from './commands/index.js';
+import { pingCommand, helpCommand, infoCommand, channelCommand, settingsCommand } from './commands/index.js';
+import { prisma } from '../database/index.js';
 
 const logger = createLogger('bot:client');
 
@@ -31,7 +26,6 @@ export class GanjibotClient extends Client {
     public readonly eventDispatcher: EventDispatcher;
     public readonly commandHandler: CommandHandler;
     public readonly addonManager: AddonManager;
-    public readonly logService: LogService;
 
     constructor(addonManager: AddonManager) {
         super({
@@ -75,7 +69,6 @@ export class GanjibotClient extends Client {
         this.addonManager = addonManager;
         this.eventDispatcher = new EventDispatcher(this, addonManager);
         this.commandHandler = new CommandHandler(this, addonManager);
-        this.logService = new LogService(this);
 
         this.setupBaseEvents();
     }
@@ -84,7 +77,7 @@ export class GanjibotClient extends Client {
      * Set up core bot events
      */
     private setupBaseEvents(): void {
-        this.once('ready', async () => {
+        this.once('clientReady', async () => {
             logger.info(
                 { user: this.user?.tag, guilds: this.guilds.cache.size },
                 'Bot is ready'
@@ -96,15 +89,15 @@ export class GanjibotClient extends Client {
             // Register addon commands and events
             await this.registerAddonFeatures();
 
-            // Initialize logging system
-            await this.initializeLogging();
-
             // Deploy commands to Discord
             try {
                 await this.commandHandler.deploy();
             } catch (error) {
                 logger.error({ error }, 'Failed to deploy commands');
             }
+
+            // Sync all current guilds to database for dashboard
+            await this.syncAllGuilds();
         });
 
         this.on('error', (error) => {
@@ -131,14 +124,60 @@ export class GanjibotClient extends Client {
             logger.info({ shardId }, 'Shard reconnecting');
         });
 
-        // Guild events for tracking
-        this.on('guildCreate', (guild) => {
+        // Guild events - sync to database
+        this.on('guildCreate', async (guild) => {
             logger.info({ guildId: guild.id, name: guild.name }, 'Joined guild');
+            await this.syncGuildToDatabase(guild);
         });
 
-        this.on('guildDelete', (guild) => {
+        this.on('guildDelete', async (guild) => {
             logger.info({ guildId: guild.id, name: guild.name }, 'Left guild');
+            // Optionally delete guild from database
+            // For now, we keep the record for data retention
         });
+
+        this.on('guildUpdate', async (_, newGuild) => {
+            await this.syncGuildToDatabase(newGuild);
+        });
+    }
+
+    /**
+     * Sync a guild to the database
+     */
+    private async syncGuildToDatabase(guild: Guild): Promise<void> {
+        try {
+            await prisma.guild.upsert({
+                where: { id: guild.id },
+                create: {
+                    id: guild.id,
+                    name: guild.name,
+                    iconHash: guild.icon,
+                    ownerId: guild.ownerId,
+                    settings: {},
+                },
+                update: {
+                    name: guild.name,
+                    iconHash: guild.icon,
+                    ownerId: guild.ownerId,
+                },
+            });
+            logger.debug({ guildId: guild.id }, 'Guild synced to database');
+        } catch (error) {
+            logger.error({ error, guildId: guild.id }, 'Failed to sync guild to database');
+        }
+    }
+
+    /**
+     * Sync all current guilds to the database
+     */
+    public async syncAllGuilds(): Promise<void> {
+        logger.info({ count: this.guilds.cache.size }, 'Syncing all guilds to database');
+
+        for (const guild of this.guilds.cache.values()) {
+            await this.syncGuildToDatabase(guild);
+        }
+
+        logger.info('All guilds synced to database');
     }
 
     /**
@@ -150,8 +189,10 @@ export class GanjibotClient extends Client {
         this.commandHandler.register(pingCommand);
         this.commandHandler.register(helpCommand);
         this.commandHandler.register(infoCommand);
+        this.commandHandler.register(channelCommand);
+        this.commandHandler.register(settingsCommand);
 
-        logger.info({ count: 3 }, 'Core commands registered');
+        logger.info({ count: 5 }, 'Core commands registered');
     }
 
     /**
@@ -220,20 +261,7 @@ export class GanjibotClient extends Client {
         return typeMap[type] ?? 3; // Default to string
     }
 
-    /**
-     * Initialize the logging system and register all loggers
-     */
-    private async initializeLogging(): Promise<void> {
-        await this.logService.initialize();
 
-        // Register all event loggers
-        registerMessageLoggers(this.logService);
-        registerMemberLoggers(this.logService);
-        registerVoiceLoggers(this.logService);
-        registerModerationLoggers(this.logService);
-
-        logger.info('Logging system initialized');
-    }
 }
 
 /**

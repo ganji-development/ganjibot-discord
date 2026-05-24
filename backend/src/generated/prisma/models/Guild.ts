@@ -195,9 +195,10 @@ export type GuildWhereInput = {
   createdAt?: Prisma.DateTimeFilter<"Guild"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Guild"> | Date | string
   addons?: Prisma.GuildAddonListRelationFilter
-  logConfigs?: Prisma.LogConfigListRelationFilter
   auditLogs?: Prisma.AuditLogListRelationFilter
   secrets?: Prisma.SecretListRelationFilter
+  accessGrants?: Prisma.GuildAccessListRelationFilter
+  logConfig?: Prisma.XOR<Prisma.LogConfigNullableScalarRelationFilter, Prisma.LogConfigWhereInput> | null
 }
 
 export type GuildOrderByWithRelationInput = {
@@ -209,9 +210,10 @@ export type GuildOrderByWithRelationInput = {
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   addons?: Prisma.GuildAddonOrderByRelationAggregateInput
-  logConfigs?: Prisma.LogConfigOrderByRelationAggregateInput
   auditLogs?: Prisma.AuditLogOrderByRelationAggregateInput
   secrets?: Prisma.SecretOrderByRelationAggregateInput
+  accessGrants?: Prisma.GuildAccessOrderByRelationAggregateInput
+  logConfig?: Prisma.LogConfigOrderByWithRelationInput
   _relevance?: Prisma.GuildOrderByRelevanceInput
 }
 
@@ -227,9 +229,10 @@ export type GuildWhereUniqueInput = Prisma.AtLeast<{
   createdAt?: Prisma.DateTimeFilter<"Guild"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Guild"> | Date | string
   addons?: Prisma.GuildAddonListRelationFilter
-  logConfigs?: Prisma.LogConfigListRelationFilter
   auditLogs?: Prisma.AuditLogListRelationFilter
   secrets?: Prisma.SecretListRelationFilter
+  accessGrants?: Prisma.GuildAccessListRelationFilter
+  logConfig?: Prisma.XOR<Prisma.LogConfigNullableScalarRelationFilter, Prisma.LogConfigWhereInput> | null
 }, "id">
 
 export type GuildOrderByWithAggregationInput = {
@@ -267,9 +270,10 @@ export type GuildCreateInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   addons?: Prisma.GuildAddonCreateNestedManyWithoutGuildInput
-  logConfigs?: Prisma.LogConfigCreateNestedManyWithoutGuildInput
   auditLogs?: Prisma.AuditLogCreateNestedManyWithoutGuildInput
   secrets?: Prisma.SecretCreateNestedManyWithoutGuildInput
+  accessGrants?: Prisma.GuildAccessCreateNestedManyWithoutGuildInput
+  logConfig?: Prisma.LogConfigCreateNestedOneWithoutGuildInput
 }
 
 export type GuildUncheckedCreateInput = {
@@ -281,9 +285,10 @@ export type GuildUncheckedCreateInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   addons?: Prisma.GuildAddonUncheckedCreateNestedManyWithoutGuildInput
-  logConfigs?: Prisma.LogConfigUncheckedCreateNestedManyWithoutGuildInput
   auditLogs?: Prisma.AuditLogUncheckedCreateNestedManyWithoutGuildInput
   secrets?: Prisma.SecretUncheckedCreateNestedManyWithoutGuildInput
+  accessGrants?: Prisma.GuildAccessUncheckedCreateNestedManyWithoutGuildInput
+  logConfig?: Prisma.LogConfigUncheckedCreateNestedOneWithoutGuildInput
 }
 
 export type GuildUpdateInput = {
@@ -295,9 +300,10 @@ export type GuildUpdateInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   addons?: Prisma.GuildAddonUpdateManyWithoutGuildNestedInput
-  logConfigs?: Prisma.LogConfigUpdateManyWithoutGuildNestedInput
   auditLogs?: Prisma.AuditLogUpdateManyWithoutGuildNestedInput
   secrets?: Prisma.SecretUpdateManyWithoutGuildNestedInput
+  accessGrants?: Prisma.GuildAccessUpdateManyWithoutGuildNestedInput
+  logConfig?: Prisma.LogConfigUpdateOneWithoutGuildNestedInput
 }
 
 export type GuildUncheckedUpdateInput = {
@@ -309,9 +315,10 @@ export type GuildUncheckedUpdateInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   addons?: Prisma.GuildAddonUncheckedUpdateManyWithoutGuildNestedInput
-  logConfigs?: Prisma.LogConfigUncheckedUpdateManyWithoutGuildNestedInput
   auditLogs?: Prisma.AuditLogUncheckedUpdateManyWithoutGuildNestedInput
   secrets?: Prisma.SecretUncheckedUpdateManyWithoutGuildNestedInput
+  accessGrants?: Prisma.GuildAccessUncheckedUpdateManyWithoutGuildNestedInput
+  logConfig?: Prisma.LogConfigUncheckedUpdateOneWithoutGuildNestedInput
 }
 
 export type GuildCreateManyInput = {
@@ -395,6 +402,20 @@ export type DateTimeFieldUpdateOperationsInput = {
   set?: Date | string
 }
 
+export type GuildCreateNestedOneWithoutAccessGrantsInput = {
+  create?: Prisma.XOR<Prisma.GuildCreateWithoutAccessGrantsInput, Prisma.GuildUncheckedCreateWithoutAccessGrantsInput>
+  connectOrCreate?: Prisma.GuildCreateOrConnectWithoutAccessGrantsInput
+  connect?: Prisma.GuildWhereUniqueInput
+}
+
+export type GuildUpdateOneRequiredWithoutAccessGrantsNestedInput = {
+  create?: Prisma.XOR<Prisma.GuildCreateWithoutAccessGrantsInput, Prisma.GuildUncheckedCreateWithoutAccessGrantsInput>
+  connectOrCreate?: Prisma.GuildCreateOrConnectWithoutAccessGrantsInput
+  upsert?: Prisma.GuildUpsertWithoutAccessGrantsInput
+  connect?: Prisma.GuildWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.GuildUpdateToOneWithWhereWithoutAccessGrantsInput, Prisma.GuildUpdateWithoutAccessGrantsInput>, Prisma.GuildUncheckedUpdateWithoutAccessGrantsInput>
+}
+
 export type GuildCreateNestedOneWithoutAddonsInput = {
   create?: Prisma.XOR<Prisma.GuildCreateWithoutAddonsInput, Prisma.GuildUncheckedCreateWithoutAddonsInput>
   connectOrCreate?: Prisma.GuildCreateOrConnectWithoutAddonsInput
@@ -407,20 +428,6 @@ export type GuildUpdateOneRequiredWithoutAddonsNestedInput = {
   upsert?: Prisma.GuildUpsertWithoutAddonsInput
   connect?: Prisma.GuildWhereUniqueInput
   update?: Prisma.XOR<Prisma.XOR<Prisma.GuildUpdateToOneWithWhereWithoutAddonsInput, Prisma.GuildUpdateWithoutAddonsInput>, Prisma.GuildUncheckedUpdateWithoutAddonsInput>
-}
-
-export type GuildCreateNestedOneWithoutLogConfigsInput = {
-  create?: Prisma.XOR<Prisma.GuildCreateWithoutLogConfigsInput, Prisma.GuildUncheckedCreateWithoutLogConfigsInput>
-  connectOrCreate?: Prisma.GuildCreateOrConnectWithoutLogConfigsInput
-  connect?: Prisma.GuildWhereUniqueInput
-}
-
-export type GuildUpdateOneRequiredWithoutLogConfigsNestedInput = {
-  create?: Prisma.XOR<Prisma.GuildCreateWithoutLogConfigsInput, Prisma.GuildUncheckedCreateWithoutLogConfigsInput>
-  connectOrCreate?: Prisma.GuildCreateOrConnectWithoutLogConfigsInput
-  upsert?: Prisma.GuildUpsertWithoutLogConfigsInput
-  connect?: Prisma.GuildWhereUniqueInput
-  update?: Prisma.XOR<Prisma.XOR<Prisma.GuildUpdateToOneWithWhereWithoutLogConfigsInput, Prisma.GuildUpdateWithoutLogConfigsInput>, Prisma.GuildUncheckedUpdateWithoutLogConfigsInput>
 }
 
 export type GuildCreateNestedOneWithoutAuditLogsInput = {
@@ -451,6 +458,92 @@ export type GuildUpdateOneRequiredWithoutSecretsNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.GuildUpdateToOneWithWhereWithoutSecretsInput, Prisma.GuildUpdateWithoutSecretsInput>, Prisma.GuildUncheckedUpdateWithoutSecretsInput>
 }
 
+export type GuildCreateNestedOneWithoutLogConfigInput = {
+  create?: Prisma.XOR<Prisma.GuildCreateWithoutLogConfigInput, Prisma.GuildUncheckedCreateWithoutLogConfigInput>
+  connectOrCreate?: Prisma.GuildCreateOrConnectWithoutLogConfigInput
+  connect?: Prisma.GuildWhereUniqueInput
+}
+
+export type GuildUpdateOneRequiredWithoutLogConfigNestedInput = {
+  create?: Prisma.XOR<Prisma.GuildCreateWithoutLogConfigInput, Prisma.GuildUncheckedCreateWithoutLogConfigInput>
+  connectOrCreate?: Prisma.GuildCreateOrConnectWithoutLogConfigInput
+  upsert?: Prisma.GuildUpsertWithoutLogConfigInput
+  connect?: Prisma.GuildWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.GuildUpdateToOneWithWhereWithoutLogConfigInput, Prisma.GuildUpdateWithoutLogConfigInput>, Prisma.GuildUncheckedUpdateWithoutLogConfigInput>
+}
+
+export type GuildCreateWithoutAccessGrantsInput = {
+  id: string
+  name: string
+  ownerId: string
+  iconHash?: string | null
+  settings?: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  addons?: Prisma.GuildAddonCreateNestedManyWithoutGuildInput
+  auditLogs?: Prisma.AuditLogCreateNestedManyWithoutGuildInput
+  secrets?: Prisma.SecretCreateNestedManyWithoutGuildInput
+  logConfig?: Prisma.LogConfigCreateNestedOneWithoutGuildInput
+}
+
+export type GuildUncheckedCreateWithoutAccessGrantsInput = {
+  id: string
+  name: string
+  ownerId: string
+  iconHash?: string | null
+  settings?: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  addons?: Prisma.GuildAddonUncheckedCreateNestedManyWithoutGuildInput
+  auditLogs?: Prisma.AuditLogUncheckedCreateNestedManyWithoutGuildInput
+  secrets?: Prisma.SecretUncheckedCreateNestedManyWithoutGuildInput
+  logConfig?: Prisma.LogConfigUncheckedCreateNestedOneWithoutGuildInput
+}
+
+export type GuildCreateOrConnectWithoutAccessGrantsInput = {
+  where: Prisma.GuildWhereUniqueInput
+  create: Prisma.XOR<Prisma.GuildCreateWithoutAccessGrantsInput, Prisma.GuildUncheckedCreateWithoutAccessGrantsInput>
+}
+
+export type GuildUpsertWithoutAccessGrantsInput = {
+  update: Prisma.XOR<Prisma.GuildUpdateWithoutAccessGrantsInput, Prisma.GuildUncheckedUpdateWithoutAccessGrantsInput>
+  create: Prisma.XOR<Prisma.GuildCreateWithoutAccessGrantsInput, Prisma.GuildUncheckedCreateWithoutAccessGrantsInput>
+  where?: Prisma.GuildWhereInput
+}
+
+export type GuildUpdateToOneWithWhereWithoutAccessGrantsInput = {
+  where?: Prisma.GuildWhereInput
+  data: Prisma.XOR<Prisma.GuildUpdateWithoutAccessGrantsInput, Prisma.GuildUncheckedUpdateWithoutAccessGrantsInput>
+}
+
+export type GuildUpdateWithoutAccessGrantsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  ownerId?: Prisma.StringFieldUpdateOperationsInput | string
+  iconHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  settings?: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  addons?: Prisma.GuildAddonUpdateManyWithoutGuildNestedInput
+  auditLogs?: Prisma.AuditLogUpdateManyWithoutGuildNestedInput
+  secrets?: Prisma.SecretUpdateManyWithoutGuildNestedInput
+  logConfig?: Prisma.LogConfigUpdateOneWithoutGuildNestedInput
+}
+
+export type GuildUncheckedUpdateWithoutAccessGrantsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  ownerId?: Prisma.StringFieldUpdateOperationsInput | string
+  iconHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  settings?: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  addons?: Prisma.GuildAddonUncheckedUpdateManyWithoutGuildNestedInput
+  auditLogs?: Prisma.AuditLogUncheckedUpdateManyWithoutGuildNestedInput
+  secrets?: Prisma.SecretUncheckedUpdateManyWithoutGuildNestedInput
+  logConfig?: Prisma.LogConfigUncheckedUpdateOneWithoutGuildNestedInput
+}
+
 export type GuildCreateWithoutAddonsInput = {
   id: string
   name: string
@@ -459,9 +552,10 @@ export type GuildCreateWithoutAddonsInput = {
   settings?: Prisma.JsonNullValueInput | runtime.InputJsonValue
   createdAt?: Date | string
   updatedAt?: Date | string
-  logConfigs?: Prisma.LogConfigCreateNestedManyWithoutGuildInput
   auditLogs?: Prisma.AuditLogCreateNestedManyWithoutGuildInput
   secrets?: Prisma.SecretCreateNestedManyWithoutGuildInput
+  accessGrants?: Prisma.GuildAccessCreateNestedManyWithoutGuildInput
+  logConfig?: Prisma.LogConfigCreateNestedOneWithoutGuildInput
 }
 
 export type GuildUncheckedCreateWithoutAddonsInput = {
@@ -472,9 +566,10 @@ export type GuildUncheckedCreateWithoutAddonsInput = {
   settings?: Prisma.JsonNullValueInput | runtime.InputJsonValue
   createdAt?: Date | string
   updatedAt?: Date | string
-  logConfigs?: Prisma.LogConfigUncheckedCreateNestedManyWithoutGuildInput
   auditLogs?: Prisma.AuditLogUncheckedCreateNestedManyWithoutGuildInput
   secrets?: Prisma.SecretUncheckedCreateNestedManyWithoutGuildInput
+  accessGrants?: Prisma.GuildAccessUncheckedCreateNestedManyWithoutGuildInput
+  logConfig?: Prisma.LogConfigUncheckedCreateNestedOneWithoutGuildInput
 }
 
 export type GuildCreateOrConnectWithoutAddonsInput = {
@@ -501,9 +596,10 @@ export type GuildUpdateWithoutAddonsInput = {
   settings?: Prisma.JsonNullValueInput | runtime.InputJsonValue
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  logConfigs?: Prisma.LogConfigUpdateManyWithoutGuildNestedInput
   auditLogs?: Prisma.AuditLogUpdateManyWithoutGuildNestedInput
   secrets?: Prisma.SecretUpdateManyWithoutGuildNestedInput
+  accessGrants?: Prisma.GuildAccessUpdateManyWithoutGuildNestedInput
+  logConfig?: Prisma.LogConfigUpdateOneWithoutGuildNestedInput
 }
 
 export type GuildUncheckedUpdateWithoutAddonsInput = {
@@ -514,77 +610,10 @@ export type GuildUncheckedUpdateWithoutAddonsInput = {
   settings?: Prisma.JsonNullValueInput | runtime.InputJsonValue
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  logConfigs?: Prisma.LogConfigUncheckedUpdateManyWithoutGuildNestedInput
   auditLogs?: Prisma.AuditLogUncheckedUpdateManyWithoutGuildNestedInput
   secrets?: Prisma.SecretUncheckedUpdateManyWithoutGuildNestedInput
-}
-
-export type GuildCreateWithoutLogConfigsInput = {
-  id: string
-  name: string
-  ownerId: string
-  iconHash?: string | null
-  settings?: Prisma.JsonNullValueInput | runtime.InputJsonValue
-  createdAt?: Date | string
-  updatedAt?: Date | string
-  addons?: Prisma.GuildAddonCreateNestedManyWithoutGuildInput
-  auditLogs?: Prisma.AuditLogCreateNestedManyWithoutGuildInput
-  secrets?: Prisma.SecretCreateNestedManyWithoutGuildInput
-}
-
-export type GuildUncheckedCreateWithoutLogConfigsInput = {
-  id: string
-  name: string
-  ownerId: string
-  iconHash?: string | null
-  settings?: Prisma.JsonNullValueInput | runtime.InputJsonValue
-  createdAt?: Date | string
-  updatedAt?: Date | string
-  addons?: Prisma.GuildAddonUncheckedCreateNestedManyWithoutGuildInput
-  auditLogs?: Prisma.AuditLogUncheckedCreateNestedManyWithoutGuildInput
-  secrets?: Prisma.SecretUncheckedCreateNestedManyWithoutGuildInput
-}
-
-export type GuildCreateOrConnectWithoutLogConfigsInput = {
-  where: Prisma.GuildWhereUniqueInput
-  create: Prisma.XOR<Prisma.GuildCreateWithoutLogConfigsInput, Prisma.GuildUncheckedCreateWithoutLogConfigsInput>
-}
-
-export type GuildUpsertWithoutLogConfigsInput = {
-  update: Prisma.XOR<Prisma.GuildUpdateWithoutLogConfigsInput, Prisma.GuildUncheckedUpdateWithoutLogConfigsInput>
-  create: Prisma.XOR<Prisma.GuildCreateWithoutLogConfigsInput, Prisma.GuildUncheckedCreateWithoutLogConfigsInput>
-  where?: Prisma.GuildWhereInput
-}
-
-export type GuildUpdateToOneWithWhereWithoutLogConfigsInput = {
-  where?: Prisma.GuildWhereInput
-  data: Prisma.XOR<Prisma.GuildUpdateWithoutLogConfigsInput, Prisma.GuildUncheckedUpdateWithoutLogConfigsInput>
-}
-
-export type GuildUpdateWithoutLogConfigsInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  name?: Prisma.StringFieldUpdateOperationsInput | string
-  ownerId?: Prisma.StringFieldUpdateOperationsInput | string
-  iconHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  settings?: Prisma.JsonNullValueInput | runtime.InputJsonValue
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  addons?: Prisma.GuildAddonUpdateManyWithoutGuildNestedInput
-  auditLogs?: Prisma.AuditLogUpdateManyWithoutGuildNestedInput
-  secrets?: Prisma.SecretUpdateManyWithoutGuildNestedInput
-}
-
-export type GuildUncheckedUpdateWithoutLogConfigsInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  name?: Prisma.StringFieldUpdateOperationsInput | string
-  ownerId?: Prisma.StringFieldUpdateOperationsInput | string
-  iconHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  settings?: Prisma.JsonNullValueInput | runtime.InputJsonValue
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  addons?: Prisma.GuildAddonUncheckedUpdateManyWithoutGuildNestedInput
-  auditLogs?: Prisma.AuditLogUncheckedUpdateManyWithoutGuildNestedInput
-  secrets?: Prisma.SecretUncheckedUpdateManyWithoutGuildNestedInput
+  accessGrants?: Prisma.GuildAccessUncheckedUpdateManyWithoutGuildNestedInput
+  logConfig?: Prisma.LogConfigUncheckedUpdateOneWithoutGuildNestedInput
 }
 
 export type GuildCreateWithoutAuditLogsInput = {
@@ -596,8 +625,9 @@ export type GuildCreateWithoutAuditLogsInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   addons?: Prisma.GuildAddonCreateNestedManyWithoutGuildInput
-  logConfigs?: Prisma.LogConfigCreateNestedManyWithoutGuildInput
   secrets?: Prisma.SecretCreateNestedManyWithoutGuildInput
+  accessGrants?: Prisma.GuildAccessCreateNestedManyWithoutGuildInput
+  logConfig?: Prisma.LogConfigCreateNestedOneWithoutGuildInput
 }
 
 export type GuildUncheckedCreateWithoutAuditLogsInput = {
@@ -609,8 +639,9 @@ export type GuildUncheckedCreateWithoutAuditLogsInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   addons?: Prisma.GuildAddonUncheckedCreateNestedManyWithoutGuildInput
-  logConfigs?: Prisma.LogConfigUncheckedCreateNestedManyWithoutGuildInput
   secrets?: Prisma.SecretUncheckedCreateNestedManyWithoutGuildInput
+  accessGrants?: Prisma.GuildAccessUncheckedCreateNestedManyWithoutGuildInput
+  logConfig?: Prisma.LogConfigUncheckedCreateNestedOneWithoutGuildInput
 }
 
 export type GuildCreateOrConnectWithoutAuditLogsInput = {
@@ -638,8 +669,9 @@ export type GuildUpdateWithoutAuditLogsInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   addons?: Prisma.GuildAddonUpdateManyWithoutGuildNestedInput
-  logConfigs?: Prisma.LogConfigUpdateManyWithoutGuildNestedInput
   secrets?: Prisma.SecretUpdateManyWithoutGuildNestedInput
+  accessGrants?: Prisma.GuildAccessUpdateManyWithoutGuildNestedInput
+  logConfig?: Prisma.LogConfigUpdateOneWithoutGuildNestedInput
 }
 
 export type GuildUncheckedUpdateWithoutAuditLogsInput = {
@@ -651,8 +683,9 @@ export type GuildUncheckedUpdateWithoutAuditLogsInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   addons?: Prisma.GuildAddonUncheckedUpdateManyWithoutGuildNestedInput
-  logConfigs?: Prisma.LogConfigUncheckedUpdateManyWithoutGuildNestedInput
   secrets?: Prisma.SecretUncheckedUpdateManyWithoutGuildNestedInput
+  accessGrants?: Prisma.GuildAccessUncheckedUpdateManyWithoutGuildNestedInput
+  logConfig?: Prisma.LogConfigUncheckedUpdateOneWithoutGuildNestedInput
 }
 
 export type GuildCreateWithoutSecretsInput = {
@@ -664,8 +697,9 @@ export type GuildCreateWithoutSecretsInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   addons?: Prisma.GuildAddonCreateNestedManyWithoutGuildInput
-  logConfigs?: Prisma.LogConfigCreateNestedManyWithoutGuildInput
   auditLogs?: Prisma.AuditLogCreateNestedManyWithoutGuildInput
+  accessGrants?: Prisma.GuildAccessCreateNestedManyWithoutGuildInput
+  logConfig?: Prisma.LogConfigCreateNestedOneWithoutGuildInput
 }
 
 export type GuildUncheckedCreateWithoutSecretsInput = {
@@ -677,8 +711,9 @@ export type GuildUncheckedCreateWithoutSecretsInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   addons?: Prisma.GuildAddonUncheckedCreateNestedManyWithoutGuildInput
-  logConfigs?: Prisma.LogConfigUncheckedCreateNestedManyWithoutGuildInput
   auditLogs?: Prisma.AuditLogUncheckedCreateNestedManyWithoutGuildInput
+  accessGrants?: Prisma.GuildAccessUncheckedCreateNestedManyWithoutGuildInput
+  logConfig?: Prisma.LogConfigUncheckedCreateNestedOneWithoutGuildInput
 }
 
 export type GuildCreateOrConnectWithoutSecretsInput = {
@@ -706,8 +741,9 @@ export type GuildUpdateWithoutSecretsInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   addons?: Prisma.GuildAddonUpdateManyWithoutGuildNestedInput
-  logConfigs?: Prisma.LogConfigUpdateManyWithoutGuildNestedInput
   auditLogs?: Prisma.AuditLogUpdateManyWithoutGuildNestedInput
+  accessGrants?: Prisma.GuildAccessUpdateManyWithoutGuildNestedInput
+  logConfig?: Prisma.LogConfigUpdateOneWithoutGuildNestedInput
 }
 
 export type GuildUncheckedUpdateWithoutSecretsInput = {
@@ -719,8 +755,81 @@ export type GuildUncheckedUpdateWithoutSecretsInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   addons?: Prisma.GuildAddonUncheckedUpdateManyWithoutGuildNestedInput
-  logConfigs?: Prisma.LogConfigUncheckedUpdateManyWithoutGuildNestedInput
   auditLogs?: Prisma.AuditLogUncheckedUpdateManyWithoutGuildNestedInput
+  accessGrants?: Prisma.GuildAccessUncheckedUpdateManyWithoutGuildNestedInput
+  logConfig?: Prisma.LogConfigUncheckedUpdateOneWithoutGuildNestedInput
+}
+
+export type GuildCreateWithoutLogConfigInput = {
+  id: string
+  name: string
+  ownerId: string
+  iconHash?: string | null
+  settings?: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  addons?: Prisma.GuildAddonCreateNestedManyWithoutGuildInput
+  auditLogs?: Prisma.AuditLogCreateNestedManyWithoutGuildInput
+  secrets?: Prisma.SecretCreateNestedManyWithoutGuildInput
+  accessGrants?: Prisma.GuildAccessCreateNestedManyWithoutGuildInput
+}
+
+export type GuildUncheckedCreateWithoutLogConfigInput = {
+  id: string
+  name: string
+  ownerId: string
+  iconHash?: string | null
+  settings?: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  addons?: Prisma.GuildAddonUncheckedCreateNestedManyWithoutGuildInput
+  auditLogs?: Prisma.AuditLogUncheckedCreateNestedManyWithoutGuildInput
+  secrets?: Prisma.SecretUncheckedCreateNestedManyWithoutGuildInput
+  accessGrants?: Prisma.GuildAccessUncheckedCreateNestedManyWithoutGuildInput
+}
+
+export type GuildCreateOrConnectWithoutLogConfigInput = {
+  where: Prisma.GuildWhereUniqueInput
+  create: Prisma.XOR<Prisma.GuildCreateWithoutLogConfigInput, Prisma.GuildUncheckedCreateWithoutLogConfigInput>
+}
+
+export type GuildUpsertWithoutLogConfigInput = {
+  update: Prisma.XOR<Prisma.GuildUpdateWithoutLogConfigInput, Prisma.GuildUncheckedUpdateWithoutLogConfigInput>
+  create: Prisma.XOR<Prisma.GuildCreateWithoutLogConfigInput, Prisma.GuildUncheckedCreateWithoutLogConfigInput>
+  where?: Prisma.GuildWhereInput
+}
+
+export type GuildUpdateToOneWithWhereWithoutLogConfigInput = {
+  where?: Prisma.GuildWhereInput
+  data: Prisma.XOR<Prisma.GuildUpdateWithoutLogConfigInput, Prisma.GuildUncheckedUpdateWithoutLogConfigInput>
+}
+
+export type GuildUpdateWithoutLogConfigInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  ownerId?: Prisma.StringFieldUpdateOperationsInput | string
+  iconHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  settings?: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  addons?: Prisma.GuildAddonUpdateManyWithoutGuildNestedInput
+  auditLogs?: Prisma.AuditLogUpdateManyWithoutGuildNestedInput
+  secrets?: Prisma.SecretUpdateManyWithoutGuildNestedInput
+  accessGrants?: Prisma.GuildAccessUpdateManyWithoutGuildNestedInput
+}
+
+export type GuildUncheckedUpdateWithoutLogConfigInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  ownerId?: Prisma.StringFieldUpdateOperationsInput | string
+  iconHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  settings?: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  addons?: Prisma.GuildAddonUncheckedUpdateManyWithoutGuildNestedInput
+  auditLogs?: Prisma.AuditLogUncheckedUpdateManyWithoutGuildNestedInput
+  secrets?: Prisma.SecretUncheckedUpdateManyWithoutGuildNestedInput
+  accessGrants?: Prisma.GuildAccessUncheckedUpdateManyWithoutGuildNestedInput
 }
 
 
@@ -730,16 +839,16 @@ export type GuildUncheckedUpdateWithoutSecretsInput = {
 
 export type GuildCountOutputType = {
   addons: number
-  logConfigs: number
   auditLogs: number
   secrets: number
+  accessGrants: number
 }
 
 export type GuildCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   addons?: boolean | GuildCountOutputTypeCountAddonsArgs
-  logConfigs?: boolean | GuildCountOutputTypeCountLogConfigsArgs
   auditLogs?: boolean | GuildCountOutputTypeCountAuditLogsArgs
   secrets?: boolean | GuildCountOutputTypeCountSecretsArgs
+  accessGrants?: boolean | GuildCountOutputTypeCountAccessGrantsArgs
 }
 
 /**
@@ -762,13 +871,6 @@ export type GuildCountOutputTypeCountAddonsArgs<ExtArgs extends runtime.Types.Ex
 /**
  * GuildCountOutputType without action
  */
-export type GuildCountOutputTypeCountLogConfigsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  where?: Prisma.LogConfigWhereInput
-}
-
-/**
- * GuildCountOutputType without action
- */
 export type GuildCountOutputTypeCountAuditLogsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   where?: Prisma.AuditLogWhereInput
 }
@@ -778,6 +880,13 @@ export type GuildCountOutputTypeCountAuditLogsArgs<ExtArgs extends runtime.Types
  */
 export type GuildCountOutputTypeCountSecretsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   where?: Prisma.SecretWhereInput
+}
+
+/**
+ * GuildCountOutputType without action
+ */
+export type GuildCountOutputTypeCountAccessGrantsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.GuildAccessWhereInput
 }
 
 
@@ -790,9 +899,10 @@ export type GuildSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
   createdAt?: boolean
   updatedAt?: boolean
   addons?: boolean | Prisma.Guild$addonsArgs<ExtArgs>
-  logConfigs?: boolean | Prisma.Guild$logConfigsArgs<ExtArgs>
   auditLogs?: boolean | Prisma.Guild$auditLogsArgs<ExtArgs>
   secrets?: boolean | Prisma.Guild$secretsArgs<ExtArgs>
+  accessGrants?: boolean | Prisma.Guild$accessGrantsArgs<ExtArgs>
+  logConfig?: boolean | Prisma.Guild$logConfigArgs<ExtArgs>
   _count?: boolean | Prisma.GuildCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["guild"]>
 
@@ -811,9 +921,10 @@ export type GuildSelectScalar = {
 export type GuildOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "ownerId" | "iconHash" | "settings" | "createdAt" | "updatedAt", ExtArgs["result"]["guild"]>
 export type GuildInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   addons?: boolean | Prisma.Guild$addonsArgs<ExtArgs>
-  logConfigs?: boolean | Prisma.Guild$logConfigsArgs<ExtArgs>
   auditLogs?: boolean | Prisma.Guild$auditLogsArgs<ExtArgs>
   secrets?: boolean | Prisma.Guild$secretsArgs<ExtArgs>
+  accessGrants?: boolean | Prisma.Guild$accessGrantsArgs<ExtArgs>
+  logConfig?: boolean | Prisma.Guild$logConfigArgs<ExtArgs>
   _count?: boolean | Prisma.GuildCountOutputTypeDefaultArgs<ExtArgs>
 }
 
@@ -821,9 +932,10 @@ export type $GuildPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs 
   name: "Guild"
   objects: {
     addons: Prisma.$GuildAddonPayload<ExtArgs>[]
-    logConfigs: Prisma.$LogConfigPayload<ExtArgs>[]
     auditLogs: Prisma.$AuditLogPayload<ExtArgs>[]
     secrets: Prisma.$SecretPayload<ExtArgs>[]
+    accessGrants: Prisma.$GuildAccessPayload<ExtArgs>[]
+    logConfig: Prisma.$LogConfigPayload<ExtArgs> | null
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     /**
@@ -1177,9 +1289,10 @@ readonly fields: GuildFieldRefs;
 export interface Prisma__GuildClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
   addons<T extends Prisma.Guild$addonsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Guild$addonsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$GuildAddonPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-  logConfigs<T extends Prisma.Guild$logConfigsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Guild$logConfigsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$LogConfigPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   auditLogs<T extends Prisma.Guild$auditLogsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Guild$auditLogsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$AuditLogPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   secrets<T extends Prisma.Guild$secretsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Guild$secretsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$SecretPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  accessGrants<T extends Prisma.Guild$accessGrantsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Guild$accessGrantsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$GuildAccessPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  logConfig<T extends Prisma.Guild$logConfigArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Guild$logConfigArgs<ExtArgs>>): Prisma.Prisma__LogConfigClient<runtime.Types.Result.GetResult<Prisma.$LogConfigPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1583,30 +1696,6 @@ export type Guild$addonsArgs<ExtArgs extends runtime.Types.Extensions.InternalAr
 }
 
 /**
- * Guild.logConfigs
- */
-export type Guild$logConfigsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  /**
-   * Select specific fields to fetch from the LogConfig
-   */
-  select?: Prisma.LogConfigSelect<ExtArgs> | null
-  /**
-   * Omit specific fields from the LogConfig
-   */
-  omit?: Prisma.LogConfigOmit<ExtArgs> | null
-  /**
-   * Choose, which related nodes to fetch as well
-   */
-  include?: Prisma.LogConfigInclude<ExtArgs> | null
-  where?: Prisma.LogConfigWhereInput
-  orderBy?: Prisma.LogConfigOrderByWithRelationInput | Prisma.LogConfigOrderByWithRelationInput[]
-  cursor?: Prisma.LogConfigWhereUniqueInput
-  take?: number
-  skip?: number
-  distinct?: Prisma.LogConfigScalarFieldEnum | Prisma.LogConfigScalarFieldEnum[]
-}
-
-/**
  * Guild.auditLogs
  */
 export type Guild$auditLogsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -1652,6 +1741,49 @@ export type Guild$secretsArgs<ExtArgs extends runtime.Types.Extensions.InternalA
   take?: number
   skip?: number
   distinct?: Prisma.SecretScalarFieldEnum | Prisma.SecretScalarFieldEnum[]
+}
+
+/**
+ * Guild.accessGrants
+ */
+export type Guild$accessGrantsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the GuildAccess
+   */
+  select?: Prisma.GuildAccessSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the GuildAccess
+   */
+  omit?: Prisma.GuildAccessOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.GuildAccessInclude<ExtArgs> | null
+  where?: Prisma.GuildAccessWhereInput
+  orderBy?: Prisma.GuildAccessOrderByWithRelationInput | Prisma.GuildAccessOrderByWithRelationInput[]
+  cursor?: Prisma.GuildAccessWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.GuildAccessScalarFieldEnum | Prisma.GuildAccessScalarFieldEnum[]
+}
+
+/**
+ * Guild.logConfig
+ */
+export type Guild$logConfigArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the LogConfig
+   */
+  select?: Prisma.LogConfigSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the LogConfig
+   */
+  omit?: Prisma.LogConfigOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.LogConfigInclude<ExtArgs> | null
+  where?: Prisma.LogConfigWhereInput
 }
 
 /**

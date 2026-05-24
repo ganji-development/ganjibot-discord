@@ -25,14 +25,140 @@
     border-radius: var(--radius-lg);
     padding: var(--space-lg);
     transition: all var(--transition-fast) var(--ease-out);
+    display: flex;
+    align-items: center;
+    gap: var(--space-md);
+    cursor: pointer;
 }
 
 .guild-card:hover:not(.placeholder) {
     border-color: var(--color-brand-500);
     box-shadow: var(--shadow-md);
+    transform: translateY(-2px);
 }
 
 .guild-card.placeholder {
     text-align: center;
     color: var(--color-text-muted);
+    flex-direction: column;
+    justify-content: center;
+    min-height: 120px;
+    cursor: default;
+}
+
+.guild-card.placeholder.error {
+    border-color: var(--color-danger-500);
+    color: var(--color-danger-400);
+}
+
+.guild-icon {
+    width: 56px;
+    height: 56px;
+    border-radius: var(--radius-full);
+    overflow: hidden;
+    background: var(--color-bg-elevated);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.guild-icon img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.guild-initial {
+    font-size: var(--text-xl);
+    font-weight: var(--font-bold);
+    color: var(--color-text-primary);
+    text-transform: uppercase;
+}
+
+.guild-info h3 {
+    font-size: var(--text-lg);
+    font-weight: var(--font-semibold);
+    color: var(--color-text-primary);
+    margin: 0;
+}
+
+.loading-spinner {
+    width: 24px;
+    height: 24px;
+    border: 3px solid var(--color-border);
+    border-top-color: var(--color-brand-500);
+    border-radius: var(--radius-full);
+    animation: spin 1s linear infinite;
+    margin-bottom: var(--space-sm);
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+.loading-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 200px;
+    color: var(--color-text-muted);
+}
+
+.login-prompt {
+    display: flex;
+    justify-content: center;
+    padding: var(--space-2xl);
+}
+
+.btn {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-sm);
+    padding: var(--space-md) var(--space-xl);
+    border: none;
+    border-radius: var(--radius-md);
+    font-size: var(--text-base);
+    font-weight: var(--font-semibold);
+    cursor: pointer;
+    transition: all var(--transition-fast) var(--ease-out);
+}
+
+.btn-discord {
+    background: #5865F2;
+    color: white;
+}
+
+.btn-discord:hover {
+    background: #4752C4;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(88, 101, 242, 0.4);
+}
+
+.btn-discord svg {
+    width: 20px;
+    height: 20px;
+}
+
+@media (max-width: 768px) {
+    .guild-grid {
+        grid-template-columns: 1fr;
+        gap: var(--space-md);
+    }
+
+    .dashboard-header h1 {
+        font-size: var(--text-2xl);
+    }
+
+    .login-prompt {
+        padding: var(--space-lg);
+    }
+
+    .btn {
+        width: 100%;
+        justify-content: center;
+    }
 }

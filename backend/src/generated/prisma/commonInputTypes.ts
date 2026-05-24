@@ -161,19 +161,6 @@ export type DateTimeWithAggregatesFilter<$PrismaModel = never> = {
   _max?: Prisma.NestedDateTimeFilter<$PrismaModel>
 }
 
-export type BoolFilter<$PrismaModel = never> = {
-  equals?: boolean | Prisma.BooleanFieldRefInput<$PrismaModel>
-  not?: Prisma.NestedBoolFilter<$PrismaModel> | boolean
-}
-
-export type BoolWithAggregatesFilter<$PrismaModel = never> = {
-  equals?: boolean | Prisma.BooleanFieldRefInput<$PrismaModel>
-  not?: Prisma.NestedBoolWithAggregatesFilter<$PrismaModel> | boolean
-  _count?: Prisma.NestedIntFilter<$PrismaModel>
-  _min?: Prisma.NestedBoolFilter<$PrismaModel>
-  _max?: Prisma.NestedBoolFilter<$PrismaModel>
-}
-
 export type IntFilter<$PrismaModel = never> = {
   equals?: number | Prisma.IntFieldRefInput<$PrismaModel>
   in?: number[]
@@ -185,11 +172,11 @@ export type IntFilter<$PrismaModel = never> = {
   not?: Prisma.NestedIntFilter<$PrismaModel> | number
 }
 
-export type EnumLogTypeFilter<$PrismaModel = never> = {
-  equals?: $Enums.LogType | Prisma.EnumLogTypeFieldRefInput<$PrismaModel>
-  in?: $Enums.LogType[]
-  notIn?: $Enums.LogType[]
-  not?: Prisma.NestedEnumLogTypeFilter<$PrismaModel> | $Enums.LogType
+export type EnumAccessLevelFilter<$PrismaModel = never> = {
+  equals?: $Enums.AccessLevel | Prisma.EnumAccessLevelFieldRefInput<$PrismaModel>
+  in?: $Enums.AccessLevel[]
+  notIn?: $Enums.AccessLevel[]
+  not?: Prisma.NestedEnumAccessLevelFilter<$PrismaModel> | $Enums.AccessLevel
 }
 
 export type IntWithAggregatesFilter<$PrismaModel = never> = {
@@ -208,14 +195,27 @@ export type IntWithAggregatesFilter<$PrismaModel = never> = {
   _max?: Prisma.NestedIntFilter<$PrismaModel>
 }
 
-export type EnumLogTypeWithAggregatesFilter<$PrismaModel = never> = {
-  equals?: $Enums.LogType | Prisma.EnumLogTypeFieldRefInput<$PrismaModel>
-  in?: $Enums.LogType[]
-  notIn?: $Enums.LogType[]
-  not?: Prisma.NestedEnumLogTypeWithAggregatesFilter<$PrismaModel> | $Enums.LogType
+export type EnumAccessLevelWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.AccessLevel | Prisma.EnumAccessLevelFieldRefInput<$PrismaModel>
+  in?: $Enums.AccessLevel[]
+  notIn?: $Enums.AccessLevel[]
+  not?: Prisma.NestedEnumAccessLevelWithAggregatesFilter<$PrismaModel> | $Enums.AccessLevel
   _count?: Prisma.NestedIntFilter<$PrismaModel>
-  _min?: Prisma.NestedEnumLogTypeFilter<$PrismaModel>
-  _max?: Prisma.NestedEnumLogTypeFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumAccessLevelFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumAccessLevelFilter<$PrismaModel>
+}
+
+export type BoolFilter<$PrismaModel = never> = {
+  equals?: boolean | Prisma.BooleanFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedBoolFilter<$PrismaModel> | boolean
+}
+
+export type BoolWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: boolean | Prisma.BooleanFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedBoolWithAggregatesFilter<$PrismaModel> | boolean
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedBoolFilter<$PrismaModel>
+  _max?: Prisma.NestedBoolFilter<$PrismaModel>
 }
 
 export type JsonNullableFilter<$PrismaModel = never> =
@@ -406,24 +406,11 @@ export type NestedDateTimeWithAggregatesFilter<$PrismaModel = never> = {
   _max?: Prisma.NestedDateTimeFilter<$PrismaModel>
 }
 
-export type NestedBoolFilter<$PrismaModel = never> = {
-  equals?: boolean | Prisma.BooleanFieldRefInput<$PrismaModel>
-  not?: Prisma.NestedBoolFilter<$PrismaModel> | boolean
-}
-
-export type NestedBoolWithAggregatesFilter<$PrismaModel = never> = {
-  equals?: boolean | Prisma.BooleanFieldRefInput<$PrismaModel>
-  not?: Prisma.NestedBoolWithAggregatesFilter<$PrismaModel> | boolean
-  _count?: Prisma.NestedIntFilter<$PrismaModel>
-  _min?: Prisma.NestedBoolFilter<$PrismaModel>
-  _max?: Prisma.NestedBoolFilter<$PrismaModel>
-}
-
-export type NestedEnumLogTypeFilter<$PrismaModel = never> = {
-  equals?: $Enums.LogType | Prisma.EnumLogTypeFieldRefInput<$PrismaModel>
-  in?: $Enums.LogType[]
-  notIn?: $Enums.LogType[]
-  not?: Prisma.NestedEnumLogTypeFilter<$PrismaModel> | $Enums.LogType
+export type NestedEnumAccessLevelFilter<$PrismaModel = never> = {
+  equals?: $Enums.AccessLevel | Prisma.EnumAccessLevelFieldRefInput<$PrismaModel>
+  in?: $Enums.AccessLevel[]
+  notIn?: $Enums.AccessLevel[]
+  not?: Prisma.NestedEnumAccessLevelFilter<$PrismaModel> | $Enums.AccessLevel
 }
 
 export type NestedIntWithAggregatesFilter<$PrismaModel = never> = {
@@ -453,14 +440,27 @@ export type NestedFloatFilter<$PrismaModel = never> = {
   not?: Prisma.NestedFloatFilter<$PrismaModel> | number
 }
 
-export type NestedEnumLogTypeWithAggregatesFilter<$PrismaModel = never> = {
-  equals?: $Enums.LogType | Prisma.EnumLogTypeFieldRefInput<$PrismaModel>
-  in?: $Enums.LogType[]
-  notIn?: $Enums.LogType[]
-  not?: Prisma.NestedEnumLogTypeWithAggregatesFilter<$PrismaModel> | $Enums.LogType
+export type NestedEnumAccessLevelWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.AccessLevel | Prisma.EnumAccessLevelFieldRefInput<$PrismaModel>
+  in?: $Enums.AccessLevel[]
+  notIn?: $Enums.AccessLevel[]
+  not?: Prisma.NestedEnumAccessLevelWithAggregatesFilter<$PrismaModel> | $Enums.AccessLevel
   _count?: Prisma.NestedIntFilter<$PrismaModel>
-  _min?: Prisma.NestedEnumLogTypeFilter<$PrismaModel>
-  _max?: Prisma.NestedEnumLogTypeFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumAccessLevelFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumAccessLevelFilter<$PrismaModel>
+}
+
+export type NestedBoolFilter<$PrismaModel = never> = {
+  equals?: boolean | Prisma.BooleanFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedBoolFilter<$PrismaModel> | boolean
+}
+
+export type NestedBoolWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: boolean | Prisma.BooleanFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedBoolWithAggregatesFilter<$PrismaModel> | boolean
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedBoolFilter<$PrismaModel>
+  _max?: Prisma.NestedBoolFilter<$PrismaModel>
 }
 
 export type NestedJsonNullableFilter<$PrismaModel = never> =

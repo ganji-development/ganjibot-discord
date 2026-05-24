@@ -45,6 +45,11 @@ export { Prisma }
  */
 export type Guild = Prisma.GuildModel
 /**
+ * Model GuildAccess
+ * Dashboard access grants for users and roles
+ */
+export type GuildAccess = Prisma.GuildAccessModel
+/**
  * Model Addon
  * Installed addons (metadata from NPM packages)
  */
@@ -54,11 +59,6 @@ export type Addon = Prisma.AddonModel
  * Per-guild addon installation and configuration
  */
 export type GuildAddon = Prisma.GuildAddonModel
-/**
- * Model LogConfig
- * Built-in logging configuration per guild
- */
-export type LogConfig = Prisma.LogConfigModel
 /**
  * Model AuditLog
  * Audit log for bot actions and security events
@@ -74,3 +74,8 @@ export type Session = Prisma.SessionModel
  * Encrypted secrets for addons (API keys, tokens, etc.)
  */
 export type Secret = Prisma.SecretModel
+/**
+ * Model LogConfig
+ * Configuration for utility logging (mod logs, server logs, etc.)
+ */
+export type LogConfig = Prisma.LogConfigModel

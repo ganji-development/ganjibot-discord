@@ -1,13 +1,12 @@
 {
     "compilerOptions": {
-        "target": "ES2022",
+        "target": "esnext",
         "module": "NodeNext",
         "moduleResolution": "NodeNext",
         "lib": [
-            "ES2022"
+            "ESNext"
         ],
         "outDir": "./dist",
-        "rootDir": "./src",
         "strict": true,
         "esModuleInterop": true,
         "skipLibCheck": true,
@@ -44,14 +43,14 @@
                 "./src/config/*"
             ]
         },
-        "baseUrl": "."
+        "noEmit": true
     },
     "include": [
-        "src/**/*"
+        "src/**/*",
+        "tests/**/*"
     ],
     "exclude": [
         "node_modules",
-        "dist",
-        "**/*.test.ts"
+        "dist"
     ]
 }

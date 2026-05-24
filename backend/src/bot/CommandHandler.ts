@@ -14,6 +14,7 @@ import {
 } from 'discord.js';
 import { createLogger } from '../logging/index.js';
 import { config } from '../config/index.js';
+import { prisma } from '../database/index.js';
 import type { AddonManager } from '../addons/index.js';
 
 const logger = createLogger('bot:commands');
@@ -125,43 +126,126 @@ export class CommandHandler {
      */
     private setupInteractionHandler(): void {
         this.client.on('interactionCreate', async (interaction) => {
-            if (!interaction.isChatInputCommand()) return;
+            // Handle slash commands
+            if (interaction.isChatInputCommand()) {
+                const command = this.commands.get(interaction.commandName);
 
-            const command = this.commands.get(interaction.commandName);
+                if (!command) {
+                    logger.warn(
+                        { commandName: interaction.commandName },
+                        'Unknown command received'
+                    );
+                    return;
+                }
 
-            if (!command) {
-                logger.warn(
-                    { commandName: interaction.commandName },
-                    'Unknown command received'
-                );
+                try {
+                    await command.execute(interaction);
+                    logger.debug(
+                        {
+                            commandName: interaction.commandName,
+                            userId: interaction.user.id,
+                            guildId: interaction.guildId,
+                        },
+                        'Command executed'
+                    );
+
+                    // Log to database if in a guild
+                    if (interaction.guildId) {
+                        try {
+                            await prisma.auditLog.create({
+                                data: {
+                                    guildId: interaction.guildId,
+                                    userId: interaction.user.id,
+                                    action: 'COMMAND_EXECUTED',
+                                    target: interaction.commandName,
+                                    details: {
+                                        channelId: interaction.channelId,
+                                        options: interaction.options.data.map((opt) => ({
+                                            name: opt.name,
+                                            value: opt.value,
+                                            type: opt.type,
+                                        })),
+                                        source: command.source,
+                                    },
+                                },
+                            });
+                        } catch (logError) {
+                            logger.error(
+                                { error: logError, commandName: interaction.commandName },
+                                'Failed to create audit log entry'
+                            );
+                        }
+                    }
+                } catch (error) {
+                    logger.error(
+                        { error, commandName: interaction.commandName },
+                        'Error executing command'
+                    );
+
+                    const content = 'There was an error executing this command.';
+
+                    if (interaction.replied || interaction.deferred) {
+                        await interaction.followUp({ content, ephemeral: true });
+                    } else {
+                        await interaction.reply({ content, ephemeral: true });
+                    }
+                }
                 return;
             }
 
+            // Handle component interactions (buttons, select menus, modals)
+            await this.handleComponentInteraction(interaction);
+        });
+    }
+
+    /**
+     * Handle component interactions (buttons, select menus, modals)
+     */
+    private async handleComponentInteraction(interaction: any): Promise<void> {
+        // Dynamic import to avoid circular dependencies
+        const { 
+            isSettingsInteraction,
+            handleSettingsButton,
+            handleSettingsStringSelect,
+            handleSettingsChannelSelect,
+            handleSettingsRoleSelect,
+            handleSettingsModal
+        } = await import('./commands/settings.js');
+
+        try {
+            // Check if this is a settings interaction
+            if (interaction.customId && isSettingsInteraction(interaction.customId)) {
+                if (interaction.isButton()) {
+                    await handleSettingsButton(interaction);
+                } else if (interaction.isStringSelectMenu()) {
+                    await handleSettingsStringSelect(interaction);
+                } else if (interaction.isChannelSelectMenu()) {
+                    await handleSettingsChannelSelect(interaction);
+                } else if (interaction.isRoleSelectMenu()) {
+                    await handleSettingsRoleSelect(interaction);
+                } else if (interaction.isModalSubmit()) {
+                    await handleSettingsModal(interaction);
+                }
+                return;
+            }
+
+            // Add more component handlers here as needed
+            // e.g., for ticket system, moderation actions, etc.
+
+        } catch (error) {
+            logger.error({ error, customId: interaction.customId }, 'Error handling component interaction');
+            
             try {
-                await command.execute(interaction);
-                logger.debug(
-                    {
-                        commandName: interaction.commandName,
-                        userId: interaction.user.id,
-                        guildId: interaction.guildId,
-                    },
-                    'Command executed'
-                );
-            } catch (error) {
-                logger.error(
-                    { error, commandName: interaction.commandName },
-                    'Error executing command'
-                );
-
-                const content = 'There was an error executing this command.';
-
+                const content = 'There was an error processing this interaction.';
                 if (interaction.replied || interaction.deferred) {
                     await interaction.followUp({ content, ephemeral: true });
                 } else {
                     await interaction.reply({ content, ephemeral: true });
                 }
+            } catch {
+                // Ignore if we can't respond
             }
-        });
+        }
     }
 
     /**

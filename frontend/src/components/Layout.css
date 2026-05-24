@@ -52,3 +52,112 @@
     padding: var(--space-xl);
     overflow-y: auto;
 }
+
+.sidebar-footer {
+    margin-top: auto;
+    padding: var(--space-md);
+    border-top: 1px solid var(--color-border-light);
+}
+
+.btn-logout {
+    display: flex;
+    align-items: center;
+    gap: var(--space-sm);
+    width: 100%;
+    padding: var(--space-sm) var(--space-md);
+    background: transparent;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    color: var(--color-text-secondary);
+    font-size: var(--text-sm);
+    cursor: pointer;
+    transition: all var(--transition-fast) var(--ease-out);
+}
+
+.btn-logout:hover {
+    background: var(--color-danger-500);
+    border-color: var(--color-danger-500);
+    color: white;
+}
+
+.btn-logout svg {
+    flex-shrink: 0;
+}
+
+/* Mobile Responsive */
+.mobile-header {
+    display: none;
+    align-items: center;
+    gap: var(--space-md);
+    padding: var(--space-md);
+    background: var(--color-surface);
+    border-bottom: 1px solid var(--color-border);
+    position: sticky;
+    top: 0;
+    z-index: var(--z-sticky);
+}
+
+.btn-menu {
+    background: none;
+    border: none;
+    color: var(--color-text-primary);
+    cursor: pointer;
+    padding: var(--space-xs);
+    display: flex;
+}
+
+.mobile-title {
+    font-size: var(--text-lg);
+    font-weight: var(--font-bold);
+    color: var(--color-text-primary);
+}
+
+.sidebar-overlay {
+    display: none;
+}
+
+@media (max-width: 768px) {
+    .layout {
+        flex-direction: column;
+    }
+
+    .mobile-header {
+        display: flex;
+    }
+
+    .sidebar {
+        position: fixed;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        z-index: var(--z-modal);
+        transform: translateX(-100%);
+        transition: transform var(--transition-base) var(--ease-out);
+        box-shadow: var(--shadow-xl);
+        width: 280px;
+    }
+
+    .layout.sidebar-open .sidebar {
+        transform: translateX(0);
+    }
+
+    .sidebar-overlay {
+        display: block;
+        position: fixed;
+        inset: 0;
+        background: rgba(0, 0, 0, 0.5);
+        z-index: 599; /* Just below modal z-index 600 */
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity var(--transition-base);
+    }
+
+    .sidebar-overlay.visible {
+        opacity: 1;
+        pointer-events: auto;
+    }
+
+    .main-content {
+        padding: var(--space-md);
+    }
+}

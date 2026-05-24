@@ -60,6 +60,7 @@ async function main(): Promise<void> {
         process.on('SIGINT', () => shutdown('SIGINT'));
         process.on('SIGTERM', () => shutdown('SIGTERM'));
     } catch (error) {
+        console.error('FATAL ERROR:', error);
         logger.fatal({ error }, 'Failed to start Ganjibot-Discord');
         await prisma.$disconnect();
         process.exit(1);

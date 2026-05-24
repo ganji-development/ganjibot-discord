@@ -32,6 +32,7 @@ export interface ApiContext {
     client: GanjibotClient;
     addonManager: AddonManager;
     userId?: string;
+    sessionId?: string;
 }
 
 /**
@@ -92,6 +93,7 @@ export async function createApiServer(
         expressMiddleware(apolloServer, {
             context: async ({ req }: { req: Request }): Promise<ApiContext> => {
                 let userId: string | undefined;
+                let sessionId: string | undefined;
 
                 // Extract user from JWT token if present
                 const authHeader = req.headers.authorization;
@@ -103,6 +105,7 @@ export async function createApiServer(
                             sessionId: string;
                         };
                         userId = payload.userId;
+                        sessionId = payload.sessionId;
                     } catch {
                         // Invalid token - continue without userId
                     }
@@ -113,6 +116,7 @@ export async function createApiServer(
                     client,
                     addonManager,
                     ...(userId !== undefined && { userId }),
+                    ...(sessionId !== undefined && { sessionId }),
                 };
             },
         })

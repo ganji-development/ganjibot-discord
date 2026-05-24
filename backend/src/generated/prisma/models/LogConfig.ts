@@ -14,7 +14,7 @@ import type * as Prisma from "../internal/prismaNamespace.js"
 
 /**
  * Model LogConfig
- * Built-in logging configuration per guild
+ * Configuration for utility logging (mod logs, server logs, etc.)
  */
 export type LogConfigModel = runtime.Types.Result.DefaultSelection<Prisma.$LogConfigPayload>
 
@@ -37,9 +37,15 @@ export type LogConfigSumAggregateOutputType = {
 export type LogConfigMinAggregateOutputType = {
   id: number | null
   guildId: string | null
-  logType: $Enums.LogType | null
-  channelId: string | null
-  enabled: boolean | null
+  modLogChannelId: string | null
+  serverLogChannelId: string | null
+  voiceLogChannelId: string | null
+  joinLeaveLogChannelId: string | null
+  commandLogChannelId: string | null
+  logMessages: boolean | null
+  logMembers: boolean | null
+  logVoice: boolean | null
+  logModeration: boolean | null
   createdAt: Date | null
   updatedAt: Date | null
 }
@@ -47,9 +53,15 @@ export type LogConfigMinAggregateOutputType = {
 export type LogConfigMaxAggregateOutputType = {
   id: number | null
   guildId: string | null
-  logType: $Enums.LogType | null
-  channelId: string | null
-  enabled: boolean | null
+  modLogChannelId: string | null
+  serverLogChannelId: string | null
+  voiceLogChannelId: string | null
+  joinLeaveLogChannelId: string | null
+  commandLogChannelId: string | null
+  logMessages: boolean | null
+  logMembers: boolean | null
+  logVoice: boolean | null
+  logModeration: boolean | null
   createdAt: Date | null
   updatedAt: Date | null
 }
@@ -57,11 +69,15 @@ export type LogConfigMaxAggregateOutputType = {
 export type LogConfigCountAggregateOutputType = {
   id: number
   guildId: number
-  logType: number
-  channelId: number
-  enabled: number
-  filters: number
-  format: number
+  modLogChannelId: number
+  serverLogChannelId: number
+  voiceLogChannelId: number
+  joinLeaveLogChannelId: number
+  commandLogChannelId: number
+  logMessages: number
+  logMembers: number
+  logVoice: number
+  logModeration: number
   createdAt: number
   updatedAt: number
   _all: number
@@ -79,9 +95,15 @@ export type LogConfigSumAggregateInputType = {
 export type LogConfigMinAggregateInputType = {
   id?: true
   guildId?: true
-  logType?: true
-  channelId?: true
-  enabled?: true
+  modLogChannelId?: true
+  serverLogChannelId?: true
+  voiceLogChannelId?: true
+  joinLeaveLogChannelId?: true
+  commandLogChannelId?: true
+  logMessages?: true
+  logMembers?: true
+  logVoice?: true
+  logModeration?: true
   createdAt?: true
   updatedAt?: true
 }
@@ -89,9 +111,15 @@ export type LogConfigMinAggregateInputType = {
 export type LogConfigMaxAggregateInputType = {
   id?: true
   guildId?: true
-  logType?: true
-  channelId?: true
-  enabled?: true
+  modLogChannelId?: true
+  serverLogChannelId?: true
+  voiceLogChannelId?: true
+  joinLeaveLogChannelId?: true
+  commandLogChannelId?: true
+  logMessages?: true
+  logMembers?: true
+  logVoice?: true
+  logModeration?: true
   createdAt?: true
   updatedAt?: true
 }
@@ -99,11 +127,15 @@ export type LogConfigMaxAggregateInputType = {
 export type LogConfigCountAggregateInputType = {
   id?: true
   guildId?: true
-  logType?: true
-  channelId?: true
-  enabled?: true
-  filters?: true
-  format?: true
+  modLogChannelId?: true
+  serverLogChannelId?: true
+  voiceLogChannelId?: true
+  joinLeaveLogChannelId?: true
+  commandLogChannelId?: true
+  logMessages?: true
+  logMembers?: true
+  logVoice?: true
+  logModeration?: true
   createdAt?: true
   updatedAt?: true
   _all?: true
@@ -198,11 +230,15 @@ export type LogConfigGroupByArgs<ExtArgs extends runtime.Types.Extensions.Intern
 export type LogConfigGroupByOutputType = {
   id: number
   guildId: string
-  logType: $Enums.LogType
-  channelId: string
-  enabled: boolean
-  filters: runtime.JsonValue
-  format: runtime.JsonValue
+  modLogChannelId: string | null
+  serverLogChannelId: string | null
+  voiceLogChannelId: string | null
+  joinLeaveLogChannelId: string | null
+  commandLogChannelId: string | null
+  logMessages: boolean
+  logMembers: boolean
+  logVoice: boolean
+  logModeration: boolean
   createdAt: Date
   updatedAt: Date
   _count: LogConfigCountAggregateOutputType | null
@@ -233,11 +269,15 @@ export type LogConfigWhereInput = {
   NOT?: Prisma.LogConfigWhereInput | Prisma.LogConfigWhereInput[]
   id?: Prisma.IntFilter<"LogConfig"> | number
   guildId?: Prisma.StringFilter<"LogConfig"> | string
-  logType?: Prisma.EnumLogTypeFilter<"LogConfig"> | $Enums.LogType
-  channelId?: Prisma.StringFilter<"LogConfig"> | string
-  enabled?: Prisma.BoolFilter<"LogConfig"> | boolean
-  filters?: Prisma.JsonFilter<"LogConfig">
-  format?: Prisma.JsonFilter<"LogConfig">
+  modLogChannelId?: Prisma.StringNullableFilter<"LogConfig"> | string | null
+  serverLogChannelId?: Prisma.StringNullableFilter<"LogConfig"> | string | null
+  voiceLogChannelId?: Prisma.StringNullableFilter<"LogConfig"> | string | null
+  joinLeaveLogChannelId?: Prisma.StringNullableFilter<"LogConfig"> | string | null
+  commandLogChannelId?: Prisma.StringNullableFilter<"LogConfig"> | string | null
+  logMessages?: Prisma.BoolFilter<"LogConfig"> | boolean
+  logMembers?: Prisma.BoolFilter<"LogConfig"> | boolean
+  logVoice?: Prisma.BoolFilter<"LogConfig"> | boolean
+  logModeration?: Prisma.BoolFilter<"LogConfig"> | boolean
   createdAt?: Prisma.DateTimeFilter<"LogConfig"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"LogConfig"> | Date | string
   guild?: Prisma.XOR<Prisma.GuildScalarRelationFilter, Prisma.GuildWhereInput>
@@ -246,11 +286,15 @@ export type LogConfigWhereInput = {
 export type LogConfigOrderByWithRelationInput = {
   id?: Prisma.SortOrder
   guildId?: Prisma.SortOrder
-  logType?: Prisma.SortOrder
-  channelId?: Prisma.SortOrder
-  enabled?: Prisma.SortOrder
-  filters?: Prisma.SortOrder
-  format?: Prisma.SortOrder
+  modLogChannelId?: Prisma.SortOrderInput | Prisma.SortOrder
+  serverLogChannelId?: Prisma.SortOrderInput | Prisma.SortOrder
+  voiceLogChannelId?: Prisma.SortOrderInput | Prisma.SortOrder
+  joinLeaveLogChannelId?: Prisma.SortOrderInput | Prisma.SortOrder
+  commandLogChannelId?: Prisma.SortOrderInput | Prisma.SortOrder
+  logMessages?: Prisma.SortOrder
+  logMembers?: Prisma.SortOrder
+  logVoice?: Prisma.SortOrder
+  logModeration?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   guild?: Prisma.GuildOrderByWithRelationInput
@@ -259,29 +303,36 @@ export type LogConfigOrderByWithRelationInput = {
 
 export type LogConfigWhereUniqueInput = Prisma.AtLeast<{
   id?: number
-  guildId_logType?: Prisma.LogConfigGuildIdLogTypeCompoundUniqueInput
+  guildId?: string
   AND?: Prisma.LogConfigWhereInput | Prisma.LogConfigWhereInput[]
   OR?: Prisma.LogConfigWhereInput[]
   NOT?: Prisma.LogConfigWhereInput | Prisma.LogConfigWhereInput[]
-  guildId?: Prisma.StringFilter<"LogConfig"> | string
-  logType?: Prisma.EnumLogTypeFilter<"LogConfig"> | $Enums.LogType
-  channelId?: Prisma.StringFilter<"LogConfig"> | string
-  enabled?: Prisma.BoolFilter<"LogConfig"> | boolean
-  filters?: Prisma.JsonFilter<"LogConfig">
-  format?: Prisma.JsonFilter<"LogConfig">
+  modLogChannelId?: Prisma.StringNullableFilter<"LogConfig"> | string | null
+  serverLogChannelId?: Prisma.StringNullableFilter<"LogConfig"> | string | null
+  voiceLogChannelId?: Prisma.StringNullableFilter<"LogConfig"> | string | null
+  joinLeaveLogChannelId?: Prisma.StringNullableFilter<"LogConfig"> | string | null
+  commandLogChannelId?: Prisma.StringNullableFilter<"LogConfig"> | string | null
+  logMessages?: Prisma.BoolFilter<"LogConfig"> | boolean
+  logMembers?: Prisma.BoolFilter<"LogConfig"> | boolean
+  logVoice?: Prisma.BoolFilter<"LogConfig"> | boolean
+  logModeration?: Prisma.BoolFilter<"LogConfig"> | boolean
   createdAt?: Prisma.DateTimeFilter<"LogConfig"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"LogConfig"> | Date | string
   guild?: Prisma.XOR<Prisma.GuildScalarRelationFilter, Prisma.GuildWhereInput>
-}, "id" | "guildId_logType">
+}, "id" | "guildId">
 
 export type LogConfigOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
   guildId?: Prisma.SortOrder
-  logType?: Prisma.SortOrder
-  channelId?: Prisma.SortOrder
-  enabled?: Prisma.SortOrder
-  filters?: Prisma.SortOrder
-  format?: Prisma.SortOrder
+  modLogChannelId?: Prisma.SortOrderInput | Prisma.SortOrder
+  serverLogChannelId?: Prisma.SortOrderInput | Prisma.SortOrder
+  voiceLogChannelId?: Prisma.SortOrderInput | Prisma.SortOrder
+  joinLeaveLogChannelId?: Prisma.SortOrderInput | Prisma.SortOrder
+  commandLogChannelId?: Prisma.SortOrderInput | Prisma.SortOrder
+  logMessages?: Prisma.SortOrder
+  logMembers?: Prisma.SortOrder
+  logVoice?: Prisma.SortOrder
+  logModeration?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   _count?: Prisma.LogConfigCountOrderByAggregateInput
@@ -297,57 +348,77 @@ export type LogConfigScalarWhereWithAggregatesInput = {
   NOT?: Prisma.LogConfigScalarWhereWithAggregatesInput | Prisma.LogConfigScalarWhereWithAggregatesInput[]
   id?: Prisma.IntWithAggregatesFilter<"LogConfig"> | number
   guildId?: Prisma.StringWithAggregatesFilter<"LogConfig"> | string
-  logType?: Prisma.EnumLogTypeWithAggregatesFilter<"LogConfig"> | $Enums.LogType
-  channelId?: Prisma.StringWithAggregatesFilter<"LogConfig"> | string
-  enabled?: Prisma.BoolWithAggregatesFilter<"LogConfig"> | boolean
-  filters?: Prisma.JsonWithAggregatesFilter<"LogConfig">
-  format?: Prisma.JsonWithAggregatesFilter<"LogConfig">
+  modLogChannelId?: Prisma.StringNullableWithAggregatesFilter<"LogConfig"> | string | null
+  serverLogChannelId?: Prisma.StringNullableWithAggregatesFilter<"LogConfig"> | string | null
+  voiceLogChannelId?: Prisma.StringNullableWithAggregatesFilter<"LogConfig"> | string | null
+  joinLeaveLogChannelId?: Prisma.StringNullableWithAggregatesFilter<"LogConfig"> | string | null
+  commandLogChannelId?: Prisma.StringNullableWithAggregatesFilter<"LogConfig"> | string | null
+  logMessages?: Prisma.BoolWithAggregatesFilter<"LogConfig"> | boolean
+  logMembers?: Prisma.BoolWithAggregatesFilter<"LogConfig"> | boolean
+  logVoice?: Prisma.BoolWithAggregatesFilter<"LogConfig"> | boolean
+  logModeration?: Prisma.BoolWithAggregatesFilter<"LogConfig"> | boolean
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"LogConfig"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"LogConfig"> | Date | string
 }
 
 export type LogConfigCreateInput = {
-  logType: $Enums.LogType
-  channelId: string
-  enabled?: boolean
-  filters?: Prisma.JsonNullValueInput | runtime.InputJsonValue
-  format?: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  modLogChannelId?: string | null
+  serverLogChannelId?: string | null
+  voiceLogChannelId?: string | null
+  joinLeaveLogChannelId?: string | null
+  commandLogChannelId?: string | null
+  logMessages?: boolean
+  logMembers?: boolean
+  logVoice?: boolean
+  logModeration?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
-  guild: Prisma.GuildCreateNestedOneWithoutLogConfigsInput
+  guild: Prisma.GuildCreateNestedOneWithoutLogConfigInput
 }
 
 export type LogConfigUncheckedCreateInput = {
   id?: number
   guildId: string
-  logType: $Enums.LogType
-  channelId: string
-  enabled?: boolean
-  filters?: Prisma.JsonNullValueInput | runtime.InputJsonValue
-  format?: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  modLogChannelId?: string | null
+  serverLogChannelId?: string | null
+  voiceLogChannelId?: string | null
+  joinLeaveLogChannelId?: string | null
+  commandLogChannelId?: string | null
+  logMessages?: boolean
+  logMembers?: boolean
+  logVoice?: boolean
+  logModeration?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
 }
 
 export type LogConfigUpdateInput = {
-  logType?: Prisma.EnumLogTypeFieldUpdateOperationsInput | $Enums.LogType
-  channelId?: Prisma.StringFieldUpdateOperationsInput | string
-  enabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  filters?: Prisma.JsonNullValueInput | runtime.InputJsonValue
-  format?: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  modLogChannelId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  serverLogChannelId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  voiceLogChannelId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  joinLeaveLogChannelId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  commandLogChannelId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  logMessages?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  logMembers?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  logVoice?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  logModeration?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  guild?: Prisma.GuildUpdateOneRequiredWithoutLogConfigsNestedInput
+  guild?: Prisma.GuildUpdateOneRequiredWithoutLogConfigNestedInput
 }
 
 export type LogConfigUncheckedUpdateInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   guildId?: Prisma.StringFieldUpdateOperationsInput | string
-  logType?: Prisma.EnumLogTypeFieldUpdateOperationsInput | $Enums.LogType
-  channelId?: Prisma.StringFieldUpdateOperationsInput | string
-  enabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  filters?: Prisma.JsonNullValueInput | runtime.InputJsonValue
-  format?: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  modLogChannelId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  serverLogChannelId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  voiceLogChannelId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  joinLeaveLogChannelId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  commandLogChannelId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  logMessages?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  logMembers?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  logVoice?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  logModeration?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -355,21 +426,29 @@ export type LogConfigUncheckedUpdateInput = {
 export type LogConfigCreateManyInput = {
   id?: number
   guildId: string
-  logType: $Enums.LogType
-  channelId: string
-  enabled?: boolean
-  filters?: Prisma.JsonNullValueInput | runtime.InputJsonValue
-  format?: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  modLogChannelId?: string | null
+  serverLogChannelId?: string | null
+  voiceLogChannelId?: string | null
+  joinLeaveLogChannelId?: string | null
+  commandLogChannelId?: string | null
+  logMessages?: boolean
+  logMembers?: boolean
+  logVoice?: boolean
+  logModeration?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
 }
 
 export type LogConfigUpdateManyMutationInput = {
-  logType?: Prisma.EnumLogTypeFieldUpdateOperationsInput | $Enums.LogType
-  channelId?: Prisma.StringFieldUpdateOperationsInput | string
-  enabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  filters?: Prisma.JsonNullValueInput | runtime.InputJsonValue
-  format?: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  modLogChannelId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  serverLogChannelId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  voiceLogChannelId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  joinLeaveLogChannelId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  commandLogChannelId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  logMessages?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  logMembers?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  logVoice?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  logModeration?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -377,23 +456,22 @@ export type LogConfigUpdateManyMutationInput = {
 export type LogConfigUncheckedUpdateManyInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   guildId?: Prisma.StringFieldUpdateOperationsInput | string
-  logType?: Prisma.EnumLogTypeFieldUpdateOperationsInput | $Enums.LogType
-  channelId?: Prisma.StringFieldUpdateOperationsInput | string
-  enabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  filters?: Prisma.JsonNullValueInput | runtime.InputJsonValue
-  format?: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  modLogChannelId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  serverLogChannelId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  voiceLogChannelId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  joinLeaveLogChannelId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  commandLogChannelId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  logMessages?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  logMembers?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  logVoice?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  logModeration?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
-export type LogConfigListRelationFilter = {
-  every?: Prisma.LogConfigWhereInput
-  some?: Prisma.LogConfigWhereInput
-  none?: Prisma.LogConfigWhereInput
-}
-
-export type LogConfigOrderByRelationAggregateInput = {
-  _count?: Prisma.SortOrder
+export type LogConfigNullableScalarRelationFilter = {
+  is?: Prisma.LogConfigWhereInput | null
+  isNot?: Prisma.LogConfigWhereInput | null
 }
 
 export type LogConfigOrderByRelevanceInput = {
@@ -402,19 +480,18 @@ export type LogConfigOrderByRelevanceInput = {
   search: string
 }
 
-export type LogConfigGuildIdLogTypeCompoundUniqueInput = {
-  guildId: string
-  logType: $Enums.LogType
-}
-
 export type LogConfigCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
   guildId?: Prisma.SortOrder
-  logType?: Prisma.SortOrder
-  channelId?: Prisma.SortOrder
-  enabled?: Prisma.SortOrder
-  filters?: Prisma.SortOrder
-  format?: Prisma.SortOrder
+  modLogChannelId?: Prisma.SortOrder
+  serverLogChannelId?: Prisma.SortOrder
+  voiceLogChannelId?: Prisma.SortOrder
+  joinLeaveLogChannelId?: Prisma.SortOrder
+  commandLogChannelId?: Prisma.SortOrder
+  logMessages?: Prisma.SortOrder
+  logMembers?: Prisma.SortOrder
+  logVoice?: Prisma.SortOrder
+  logModeration?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -426,9 +503,15 @@ export type LogConfigAvgOrderByAggregateInput = {
 export type LogConfigMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
   guildId?: Prisma.SortOrder
-  logType?: Prisma.SortOrder
-  channelId?: Prisma.SortOrder
-  enabled?: Prisma.SortOrder
+  modLogChannelId?: Prisma.SortOrder
+  serverLogChannelId?: Prisma.SortOrder
+  voiceLogChannelId?: Prisma.SortOrder
+  joinLeaveLogChannelId?: Prisma.SortOrder
+  commandLogChannelId?: Prisma.SortOrder
+  logMessages?: Prisma.SortOrder
+  logMembers?: Prisma.SortOrder
+  logVoice?: Prisma.SortOrder
+  logModeration?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -436,9 +519,15 @@ export type LogConfigMaxOrderByAggregateInput = {
 export type LogConfigMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
   guildId?: Prisma.SortOrder
-  logType?: Prisma.SortOrder
-  channelId?: Prisma.SortOrder
-  enabled?: Prisma.SortOrder
+  modLogChannelId?: Prisma.SortOrder
+  serverLogChannelId?: Prisma.SortOrder
+  voiceLogChannelId?: Prisma.SortOrder
+  joinLeaveLogChannelId?: Prisma.SortOrder
+  commandLogChannelId?: Prisma.SortOrder
+  logMessages?: Prisma.SortOrder
+  logMembers?: Prisma.SortOrder
+  logVoice?: Prisma.SortOrder
+  logModeration?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -447,77 +536,63 @@ export type LogConfigSumOrderByAggregateInput = {
   id?: Prisma.SortOrder
 }
 
-export type LogConfigCreateNestedManyWithoutGuildInput = {
-  create?: Prisma.XOR<Prisma.LogConfigCreateWithoutGuildInput, Prisma.LogConfigUncheckedCreateWithoutGuildInput> | Prisma.LogConfigCreateWithoutGuildInput[] | Prisma.LogConfigUncheckedCreateWithoutGuildInput[]
-  connectOrCreate?: Prisma.LogConfigCreateOrConnectWithoutGuildInput | Prisma.LogConfigCreateOrConnectWithoutGuildInput[]
-  createMany?: Prisma.LogConfigCreateManyGuildInputEnvelope
-  connect?: Prisma.LogConfigWhereUniqueInput | Prisma.LogConfigWhereUniqueInput[]
+export type LogConfigCreateNestedOneWithoutGuildInput = {
+  create?: Prisma.XOR<Prisma.LogConfigCreateWithoutGuildInput, Prisma.LogConfigUncheckedCreateWithoutGuildInput>
+  connectOrCreate?: Prisma.LogConfigCreateOrConnectWithoutGuildInput
+  connect?: Prisma.LogConfigWhereUniqueInput
 }
 
-export type LogConfigUncheckedCreateNestedManyWithoutGuildInput = {
-  create?: Prisma.XOR<Prisma.LogConfigCreateWithoutGuildInput, Prisma.LogConfigUncheckedCreateWithoutGuildInput> | Prisma.LogConfigCreateWithoutGuildInput[] | Prisma.LogConfigUncheckedCreateWithoutGuildInput[]
-  connectOrCreate?: Prisma.LogConfigCreateOrConnectWithoutGuildInput | Prisma.LogConfigCreateOrConnectWithoutGuildInput[]
-  createMany?: Prisma.LogConfigCreateManyGuildInputEnvelope
-  connect?: Prisma.LogConfigWhereUniqueInput | Prisma.LogConfigWhereUniqueInput[]
+export type LogConfigUncheckedCreateNestedOneWithoutGuildInput = {
+  create?: Prisma.XOR<Prisma.LogConfigCreateWithoutGuildInput, Prisma.LogConfigUncheckedCreateWithoutGuildInput>
+  connectOrCreate?: Prisma.LogConfigCreateOrConnectWithoutGuildInput
+  connect?: Prisma.LogConfigWhereUniqueInput
 }
 
-export type LogConfigUpdateManyWithoutGuildNestedInput = {
-  create?: Prisma.XOR<Prisma.LogConfigCreateWithoutGuildInput, Prisma.LogConfigUncheckedCreateWithoutGuildInput> | Prisma.LogConfigCreateWithoutGuildInput[] | Prisma.LogConfigUncheckedCreateWithoutGuildInput[]
-  connectOrCreate?: Prisma.LogConfigCreateOrConnectWithoutGuildInput | Prisma.LogConfigCreateOrConnectWithoutGuildInput[]
-  upsert?: Prisma.LogConfigUpsertWithWhereUniqueWithoutGuildInput | Prisma.LogConfigUpsertWithWhereUniqueWithoutGuildInput[]
-  createMany?: Prisma.LogConfigCreateManyGuildInputEnvelope
-  set?: Prisma.LogConfigWhereUniqueInput | Prisma.LogConfigWhereUniqueInput[]
-  disconnect?: Prisma.LogConfigWhereUniqueInput | Prisma.LogConfigWhereUniqueInput[]
-  delete?: Prisma.LogConfigWhereUniqueInput | Prisma.LogConfigWhereUniqueInput[]
-  connect?: Prisma.LogConfigWhereUniqueInput | Prisma.LogConfigWhereUniqueInput[]
-  update?: Prisma.LogConfigUpdateWithWhereUniqueWithoutGuildInput | Prisma.LogConfigUpdateWithWhereUniqueWithoutGuildInput[]
-  updateMany?: Prisma.LogConfigUpdateManyWithWhereWithoutGuildInput | Prisma.LogConfigUpdateManyWithWhereWithoutGuildInput[]
-  deleteMany?: Prisma.LogConfigScalarWhereInput | Prisma.LogConfigScalarWhereInput[]
+export type LogConfigUpdateOneWithoutGuildNestedInput = {
+  create?: Prisma.XOR<Prisma.LogConfigCreateWithoutGuildInput, Prisma.LogConfigUncheckedCreateWithoutGuildInput>
+  connectOrCreate?: Prisma.LogConfigCreateOrConnectWithoutGuildInput
+  upsert?: Prisma.LogConfigUpsertWithoutGuildInput
+  disconnect?: Prisma.LogConfigWhereInput | boolean
+  delete?: Prisma.LogConfigWhereInput | boolean
+  connect?: Prisma.LogConfigWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.LogConfigUpdateToOneWithWhereWithoutGuildInput, Prisma.LogConfigUpdateWithoutGuildInput>, Prisma.LogConfigUncheckedUpdateWithoutGuildInput>
 }
 
-export type LogConfigUncheckedUpdateManyWithoutGuildNestedInput = {
-  create?: Prisma.XOR<Prisma.LogConfigCreateWithoutGuildInput, Prisma.LogConfigUncheckedCreateWithoutGuildInput> | Prisma.LogConfigCreateWithoutGuildInput[] | Prisma.LogConfigUncheckedCreateWithoutGuildInput[]
-  connectOrCreate?: Prisma.LogConfigCreateOrConnectWithoutGuildInput | Prisma.LogConfigCreateOrConnectWithoutGuildInput[]
-  upsert?: Prisma.LogConfigUpsertWithWhereUniqueWithoutGuildInput | Prisma.LogConfigUpsertWithWhereUniqueWithoutGuildInput[]
-  createMany?: Prisma.LogConfigCreateManyGuildInputEnvelope
-  set?: Prisma.LogConfigWhereUniqueInput | Prisma.LogConfigWhereUniqueInput[]
-  disconnect?: Prisma.LogConfigWhereUniqueInput | Prisma.LogConfigWhereUniqueInput[]
-  delete?: Prisma.LogConfigWhereUniqueInput | Prisma.LogConfigWhereUniqueInput[]
-  connect?: Prisma.LogConfigWhereUniqueInput | Prisma.LogConfigWhereUniqueInput[]
-  update?: Prisma.LogConfigUpdateWithWhereUniqueWithoutGuildInput | Prisma.LogConfigUpdateWithWhereUniqueWithoutGuildInput[]
-  updateMany?: Prisma.LogConfigUpdateManyWithWhereWithoutGuildInput | Prisma.LogConfigUpdateManyWithWhereWithoutGuildInput[]
-  deleteMany?: Prisma.LogConfigScalarWhereInput | Prisma.LogConfigScalarWhereInput[]
-}
-
-export type EnumLogTypeFieldUpdateOperationsInput = {
-  set?: $Enums.LogType
-}
-
-export type IntFieldUpdateOperationsInput = {
-  set?: number
-  increment?: number
-  decrement?: number
-  multiply?: number
-  divide?: number
+export type LogConfigUncheckedUpdateOneWithoutGuildNestedInput = {
+  create?: Prisma.XOR<Prisma.LogConfigCreateWithoutGuildInput, Prisma.LogConfigUncheckedCreateWithoutGuildInput>
+  connectOrCreate?: Prisma.LogConfigCreateOrConnectWithoutGuildInput
+  upsert?: Prisma.LogConfigUpsertWithoutGuildInput
+  disconnect?: Prisma.LogConfigWhereInput | boolean
+  delete?: Prisma.LogConfigWhereInput | boolean
+  connect?: Prisma.LogConfigWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.LogConfigUpdateToOneWithWhereWithoutGuildInput, Prisma.LogConfigUpdateWithoutGuildInput>, Prisma.LogConfigUncheckedUpdateWithoutGuildInput>
 }
 
 export type LogConfigCreateWithoutGuildInput = {
-  logType: $Enums.LogType
-  channelId: string
-  enabled?: boolean
-  filters?: Prisma.JsonNullValueInput | runtime.InputJsonValue
-  format?: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  modLogChannelId?: string | null
+  serverLogChannelId?: string | null
+  voiceLogChannelId?: string | null
+  joinLeaveLogChannelId?: string | null
+  commandLogChannelId?: string | null
+  logMessages?: boolean
+  logMembers?: boolean
+  logVoice?: boolean
+  logModeration?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
 }
 
 export type LogConfigUncheckedCreateWithoutGuildInput = {
   id?: number
-  logType: $Enums.LogType
-  channelId: string
-  enabled?: boolean
-  filters?: Prisma.JsonNullValueInput | runtime.InputJsonValue
-  format?: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  modLogChannelId?: string | null
+  serverLogChannelId?: string | null
+  voiceLogChannelId?: string | null
+  joinLeaveLogChannelId?: string | null
+  commandLogChannelId?: string | null
+  logMessages?: boolean
+  logMembers?: boolean
+  logVoice?: boolean
+  logModeration?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -527,81 +602,42 @@ export type LogConfigCreateOrConnectWithoutGuildInput = {
   create: Prisma.XOR<Prisma.LogConfigCreateWithoutGuildInput, Prisma.LogConfigUncheckedCreateWithoutGuildInput>
 }
 
-export type LogConfigCreateManyGuildInputEnvelope = {
-  data: Prisma.LogConfigCreateManyGuildInput | Prisma.LogConfigCreateManyGuildInput[]
-  skipDuplicates?: boolean
-}
-
-export type LogConfigUpsertWithWhereUniqueWithoutGuildInput = {
-  where: Prisma.LogConfigWhereUniqueInput
+export type LogConfigUpsertWithoutGuildInput = {
   update: Prisma.XOR<Prisma.LogConfigUpdateWithoutGuildInput, Prisma.LogConfigUncheckedUpdateWithoutGuildInput>
   create: Prisma.XOR<Prisma.LogConfigCreateWithoutGuildInput, Prisma.LogConfigUncheckedCreateWithoutGuildInput>
+  where?: Prisma.LogConfigWhereInput
 }
 
-export type LogConfigUpdateWithWhereUniqueWithoutGuildInput = {
-  where: Prisma.LogConfigWhereUniqueInput
+export type LogConfigUpdateToOneWithWhereWithoutGuildInput = {
+  where?: Prisma.LogConfigWhereInput
   data: Prisma.XOR<Prisma.LogConfigUpdateWithoutGuildInput, Prisma.LogConfigUncheckedUpdateWithoutGuildInput>
 }
 
-export type LogConfigUpdateManyWithWhereWithoutGuildInput = {
-  where: Prisma.LogConfigScalarWhereInput
-  data: Prisma.XOR<Prisma.LogConfigUpdateManyMutationInput, Prisma.LogConfigUncheckedUpdateManyWithoutGuildInput>
-}
-
-export type LogConfigScalarWhereInput = {
-  AND?: Prisma.LogConfigScalarWhereInput | Prisma.LogConfigScalarWhereInput[]
-  OR?: Prisma.LogConfigScalarWhereInput[]
-  NOT?: Prisma.LogConfigScalarWhereInput | Prisma.LogConfigScalarWhereInput[]
-  id?: Prisma.IntFilter<"LogConfig"> | number
-  guildId?: Prisma.StringFilter<"LogConfig"> | string
-  logType?: Prisma.EnumLogTypeFilter<"LogConfig"> | $Enums.LogType
-  channelId?: Prisma.StringFilter<"LogConfig"> | string
-  enabled?: Prisma.BoolFilter<"LogConfig"> | boolean
-  filters?: Prisma.JsonFilter<"LogConfig">
-  format?: Prisma.JsonFilter<"LogConfig">
-  createdAt?: Prisma.DateTimeFilter<"LogConfig"> | Date | string
-  updatedAt?: Prisma.DateTimeFilter<"LogConfig"> | Date | string
-}
-
-export type LogConfigCreateManyGuildInput = {
-  id?: number
-  logType: $Enums.LogType
-  channelId: string
-  enabled?: boolean
-  filters?: Prisma.JsonNullValueInput | runtime.InputJsonValue
-  format?: Prisma.JsonNullValueInput | runtime.InputJsonValue
-  createdAt?: Date | string
-  updatedAt?: Date | string
-}
-
 export type LogConfigUpdateWithoutGuildInput = {
-  logType?: Prisma.EnumLogTypeFieldUpdateOperationsInput | $Enums.LogType
-  channelId?: Prisma.StringFieldUpdateOperationsInput | string
-  enabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  filters?: Prisma.JsonNullValueInput | runtime.InputJsonValue
-  format?: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  modLogChannelId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  serverLogChannelId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  voiceLogChannelId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  joinLeaveLogChannelId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  commandLogChannelId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  logMessages?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  logMembers?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  logVoice?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  logModeration?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type LogConfigUncheckedUpdateWithoutGuildInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
-  logType?: Prisma.EnumLogTypeFieldUpdateOperationsInput | $Enums.LogType
-  channelId?: Prisma.StringFieldUpdateOperationsInput | string
-  enabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  filters?: Prisma.JsonNullValueInput | runtime.InputJsonValue
-  format?: Prisma.JsonNullValueInput | runtime.InputJsonValue
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-}
-
-export type LogConfigUncheckedUpdateManyWithoutGuildInput = {
-  id?: Prisma.IntFieldUpdateOperationsInput | number
-  logType?: Prisma.EnumLogTypeFieldUpdateOperationsInput | $Enums.LogType
-  channelId?: Prisma.StringFieldUpdateOperationsInput | string
-  enabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  filters?: Prisma.JsonNullValueInput | runtime.InputJsonValue
-  format?: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  modLogChannelId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  serverLogChannelId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  voiceLogChannelId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  joinLeaveLogChannelId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  commandLogChannelId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  logMessages?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  logMembers?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  logVoice?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  logModeration?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -611,11 +647,15 @@ export type LogConfigUncheckedUpdateManyWithoutGuildInput = {
 export type LogConfigSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   guildId?: boolean
-  logType?: boolean
-  channelId?: boolean
-  enabled?: boolean
-  filters?: boolean
-  format?: boolean
+  modLogChannelId?: boolean
+  serverLogChannelId?: boolean
+  voiceLogChannelId?: boolean
+  joinLeaveLogChannelId?: boolean
+  commandLogChannelId?: boolean
+  logMessages?: boolean
+  logMembers?: boolean
+  logVoice?: boolean
+  logModeration?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   guild?: boolean | Prisma.GuildDefaultArgs<ExtArgs>
@@ -626,16 +666,20 @@ export type LogConfigSelect<ExtArgs extends runtime.Types.Extensions.InternalArg
 export type LogConfigSelectScalar = {
   id?: boolean
   guildId?: boolean
-  logType?: boolean
-  channelId?: boolean
-  enabled?: boolean
-  filters?: boolean
-  format?: boolean
+  modLogChannelId?: boolean
+  serverLogChannelId?: boolean
+  voiceLogChannelId?: boolean
+  joinLeaveLogChannelId?: boolean
+  commandLogChannelId?: boolean
+  logMessages?: boolean
+  logMembers?: boolean
+  logVoice?: boolean
+  logModeration?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }
 
-export type LogConfigOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "guildId" | "logType" | "channelId" | "enabled" | "filters" | "format" | "createdAt" | "updatedAt", ExtArgs["result"]["logConfig"]>
+export type LogConfigOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "guildId" | "modLogChannelId" | "serverLogChannelId" | "voiceLogChannelId" | "joinLeaveLogChannelId" | "commandLogChannelId" | "logMessages" | "logMembers" | "logVoice" | "logModeration" | "createdAt" | "updatedAt", ExtArgs["result"]["logConfig"]>
 export type LogConfigInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   guild?: boolean | Prisma.GuildDefaultArgs<ExtArgs>
 }
@@ -648,17 +692,15 @@ export type $LogConfigPayload<ExtArgs extends runtime.Types.Extensions.InternalA
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: number
     guildId: string
-    logType: $Enums.LogType
-    channelId: string
-    enabled: boolean
-    /**
-     * Filter options (e.g., ignore bots, specific channels)
-     */
-    filters: runtime.JsonValue
-    /**
-     * Custom formatting options
-     */
-    format: runtime.JsonValue
+    modLogChannelId: string | null
+    serverLogChannelId: string | null
+    voiceLogChannelId: string | null
+    joinLeaveLogChannelId: string | null
+    commandLogChannelId: string | null
+    logMessages: boolean
+    logMembers: boolean
+    logVoice: boolean
+    logModeration: boolean
     createdAt: Date
     updatedAt: Date
   }, ExtArgs["result"]["logConfig"]>
@@ -1033,11 +1075,15 @@ export interface Prisma__LogConfigClient<T, Null = never, ExtArgs extends runtim
 export interface LogConfigFieldRefs {
   readonly id: Prisma.FieldRef<"LogConfig", 'Int'>
   readonly guildId: Prisma.FieldRef<"LogConfig", 'String'>
-  readonly logType: Prisma.FieldRef<"LogConfig", 'LogType'>
-  readonly channelId: Prisma.FieldRef<"LogConfig", 'String'>
-  readonly enabled: Prisma.FieldRef<"LogConfig", 'Boolean'>
-  readonly filters: Prisma.FieldRef<"LogConfig", 'Json'>
-  readonly format: Prisma.FieldRef<"LogConfig", 'Json'>
+  readonly modLogChannelId: Prisma.FieldRef<"LogConfig", 'String'>
+  readonly serverLogChannelId: Prisma.FieldRef<"LogConfig", 'String'>
+  readonly voiceLogChannelId: Prisma.FieldRef<"LogConfig", 'String'>
+  readonly joinLeaveLogChannelId: Prisma.FieldRef<"LogConfig", 'String'>
+  readonly commandLogChannelId: Prisma.FieldRef<"LogConfig", 'String'>
+  readonly logMessages: Prisma.FieldRef<"LogConfig", 'Boolean'>
+  readonly logMembers: Prisma.FieldRef<"LogConfig", 'Boolean'>
+  readonly logVoice: Prisma.FieldRef<"LogConfig", 'Boolean'>
+  readonly logModeration: Prisma.FieldRef<"LogConfig", 'Boolean'>
   readonly createdAt: Prisma.FieldRef<"LogConfig", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"LogConfig", 'DateTime'>
 }

@@ -11,6 +11,14 @@ datasource db {
 // CORE MODELS
 // =============================================================================
 
+/// Access levels for dashboard permissions
+enum AccessLevel {
+  OWNER      /// Full control, can mass delete, grant owner to others
+  ADMIN      /// Configure addons, settings, delete individual items
+  MODERATOR  /// View + moderate content
+  VIEWER     /// View-only access
+}
+
 /// Discord guild (server) registration
 model Guild {
   id        String   @id /// Discord snowflake ID
@@ -22,12 +30,31 @@ model Guild {
   updatedAt DateTime @updatedAt
 
   // Relations
-  addons     GuildAddon[]
-  logConfigs LogConfig[]
-  auditLogs  AuditLog[]
-  secrets    Secret[]
+  addons      GuildAddon[]
+  auditLogs   AuditLog[]
+  secrets     Secret[]
+  accessGrants GuildAccess[]
+  logConfig   LogConfig?
 
   @@map("guilds")
+}
+
+/// Dashboard access grants for users and roles
+model GuildAccess {
+  id        Int         @id @default(autoincrement())
+  guildId   String      @db.VarChar(64)
+  userId    String?     @db.VarChar(64)  /// Discord user ID (for direct grants)
+  roleId    String?     @db.VarChar(64)  /// Discord role ID (for role-based grants)
+  level     AccessLevel
+  grantedBy String      @db.VarChar(64)  /// User who granted this access
+  createdAt DateTime    @default(now())
+
+  // Relations
+  guild Guild @relation(fields: [guildId], references: [id], onDelete: Cascade)
+
+  @@unique([guildId, userId])
+  @@index([guildId, roleId])
+  @@map("guild_access")
 }
 
 /// Installed addons (metadata from NPM packages)
@@ -67,50 +94,8 @@ model GuildAddon {
 }
 
 // =============================================================================
-// LOGGING SYSTEM
+// AUDIT LOG
 // =============================================================================
-
-/// Built-in logging configuration per guild
-model LogConfig {
-  id        Int      @id @default(autoincrement())
-  guildId   String   @db.VarChar(64)
-  logType   LogType
-  channelId String   @db.VarChar(64)
-  enabled   Boolean  @default(true)
-  filters   Json     @default("{}") /// Filter options (e.g., ignore bots, specific channels)
-  format    Json     @default("{}") /// Custom formatting options
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-
-  // Relations
-  guild Guild @relation(fields: [guildId], references: [id], onDelete: Cascade)
-
-  @@unique([guildId, logType])
-  @@index([guildId])
-  @@map("log_configs")
-}
-
-/// Types of events that can be logged
-enum LogType {
-  MESSAGE_EDIT
-  MESSAGE_DELETE
-  MESSAGE_BULK_DELETE
-  MEMBER_JOIN
-  MEMBER_LEAVE
-  MEMBER_UPDATE
-  MEMBER_BAN
-  MEMBER_UNBAN
-  ROLE_CREATE
-  ROLE_UPDATE
-  ROLE_DELETE
-  CHANNEL_CREATE
-  CHANNEL_UPDATE
-  CHANNEL_DELETE
-  VOICE_STATE
-  INVITE_CREATE
-  INVITE_DELETE
-  MODERATION
-}
 
 /// Audit log for bot actions and security events
 model AuditLog {
@@ -170,4 +155,35 @@ model Secret {
 
   @@unique([guildId, addonId, key])
   @@map("secrets")
+}
+
+// =============================================================================
+// LOGGING CONFIGURATION
+// =============================================================================
+
+/// Configuration for utility logging (mod logs, server logs, etc.)
+model LogConfig {
+  id        Int      @id @default(autoincrement())
+  guildId   String   @unique @db.VarChar(64)
+  
+  // Log Channels
+  modLogChannelId       String? @db.VarChar(64)
+  serverLogChannelId    String? @db.VarChar(64)
+  voiceLogChannelId     String? @db.VarChar(64)
+  joinLeaveLogChannelId String? @db.VarChar(64)
+  commandLogChannelId   String? @db.VarChar(64)
+
+  // Feature Toggles
+  logMessages    Boolean @default(true)
+  logMembers     Boolean @default(true)
+  logVoice       Boolean @default(true)
+  logModeration  Boolean @default(true)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // Relations
+  guild Guild @relation(fields: [guildId], references: [id], onDelete: Cascade)
+
+  @@map("log_configs")
 }

@@ -52,12 +52,13 @@ export const AnyNull = runtime.AnyNull
 
 export const ModelName = {
   Guild: 'Guild',
+  GuildAccess: 'GuildAccess',
   Addon: 'Addon',
   GuildAddon: 'GuildAddon',
-  LogConfig: 'LogConfig',
   AuditLog: 'AuditLog',
   Session: 'Session',
-  Secret: 'Secret'
+  Secret: 'Secret',
+  LogConfig: 'LogConfig'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -89,6 +90,19 @@ export const GuildScalarFieldEnum = {
 export type GuildScalarFieldEnum = (typeof GuildScalarFieldEnum)[keyof typeof GuildScalarFieldEnum]
 
 
+export const GuildAccessScalarFieldEnum = {
+  id: 'id',
+  guildId: 'guildId',
+  userId: 'userId',
+  roleId: 'roleId',
+  level: 'level',
+  grantedBy: 'grantedBy',
+  createdAt: 'createdAt'
+} as const
+
+export type GuildAccessScalarFieldEnum = (typeof GuildAccessScalarFieldEnum)[keyof typeof GuildAccessScalarFieldEnum]
+
+
 export const AddonScalarFieldEnum = {
   id: 'id',
   name: 'name',
@@ -114,21 +128,6 @@ export const GuildAddonScalarFieldEnum = {
 } as const
 
 export type GuildAddonScalarFieldEnum = (typeof GuildAddonScalarFieldEnum)[keyof typeof GuildAddonScalarFieldEnum]
-
-
-export const LogConfigScalarFieldEnum = {
-  id: 'id',
-  guildId: 'guildId',
-  logType: 'logType',
-  channelId: 'channelId',
-  enabled: 'enabled',
-  filters: 'filters',
-  format: 'format',
-  createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
-} as const
-
-export type LogConfigScalarFieldEnum = (typeof LogConfigScalarFieldEnum)[keyof typeof LogConfigScalarFieldEnum]
 
 
 export const AuditLogScalarFieldEnum = {
@@ -169,6 +168,25 @@ export const SecretScalarFieldEnum = {
 } as const
 
 export type SecretScalarFieldEnum = (typeof SecretScalarFieldEnum)[keyof typeof SecretScalarFieldEnum]
+
+
+export const LogConfigScalarFieldEnum = {
+  id: 'id',
+  guildId: 'guildId',
+  modLogChannelId: 'modLogChannelId',
+  serverLogChannelId: 'serverLogChannelId',
+  voiceLogChannelId: 'voiceLogChannelId',
+  joinLeaveLogChannelId: 'joinLeaveLogChannelId',
+  commandLogChannelId: 'commandLogChannelId',
+  logMessages: 'logMessages',
+  logMembers: 'logMembers',
+  logVoice: 'logVoice',
+  logModeration: 'logModeration',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type LogConfigScalarFieldEnum = (typeof LogConfigScalarFieldEnum)[keyof typeof LogConfigScalarFieldEnum]
 
 
 export const SortOrder = {
@@ -229,6 +247,16 @@ export const GuildOrderByRelevanceFieldEnum = {
 export type GuildOrderByRelevanceFieldEnum = (typeof GuildOrderByRelevanceFieldEnum)[keyof typeof GuildOrderByRelevanceFieldEnum]
 
 
+export const GuildAccessOrderByRelevanceFieldEnum = {
+  guildId: 'guildId',
+  userId: 'userId',
+  roleId: 'roleId',
+  grantedBy: 'grantedBy'
+} as const
+
+export type GuildAccessOrderByRelevanceFieldEnum = (typeof GuildAccessOrderByRelevanceFieldEnum)[keyof typeof GuildAccessOrderByRelevanceFieldEnum]
+
+
 export const AddonOrderByRelevanceFieldEnum = {
   id: 'id',
   name: 'name',
@@ -247,14 +275,6 @@ export const GuildAddonOrderByRelevanceFieldEnum = {
 } as const
 
 export type GuildAddonOrderByRelevanceFieldEnum = (typeof GuildAddonOrderByRelevanceFieldEnum)[keyof typeof GuildAddonOrderByRelevanceFieldEnum]
-
-
-export const LogConfigOrderByRelevanceFieldEnum = {
-  guildId: 'guildId',
-  channelId: 'channelId'
-} as const
-
-export type LogConfigOrderByRelevanceFieldEnum = (typeof LogConfigOrderByRelevanceFieldEnum)[keyof typeof LogConfigOrderByRelevanceFieldEnum]
 
 
 export const AuditLogOrderByRelevanceFieldEnum = {
@@ -286,4 +306,16 @@ export const SecretOrderByRelevanceFieldEnum = {
 } as const
 
 export type SecretOrderByRelevanceFieldEnum = (typeof SecretOrderByRelevanceFieldEnum)[keyof typeof SecretOrderByRelevanceFieldEnum]
+
+
+export const LogConfigOrderByRelevanceFieldEnum = {
+  guildId: 'guildId',
+  modLogChannelId: 'modLogChannelId',
+  serverLogChannelId: 'serverLogChannelId',
+  voiceLogChannelId: 'voiceLogChannelId',
+  joinLeaveLogChannelId: 'joinLeaveLogChannelId',
+  commandLogChannelId: 'commandLogChannelId'
+} as const
+
+export type LogConfigOrderByRelevanceFieldEnum = (typeof LogConfigOrderByRelevanceFieldEnum)[keyof typeof LogConfigOrderByRelevanceFieldEnum]
 

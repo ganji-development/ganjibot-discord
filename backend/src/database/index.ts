@@ -81,7 +81,8 @@ export async function syncDatabaseSchema(): Promise<void> {
         } else {
             logger.error({ error: err.message }, 'Failed to synchronize database schema');
         }
-
+        
+        console.error('Database Sync Error:', error);
         throw error;
     }
 }
@@ -104,7 +105,6 @@ export async function validateDatabase(): Promise<void> {
             prisma.guild.count(),
             prisma.addon.count(),
             prisma.guildAddon.count(),
-            prisma.logConfig.count(),
             prisma.auditLog.count(),
             prisma.session.count(),
             prisma.secret.count(),

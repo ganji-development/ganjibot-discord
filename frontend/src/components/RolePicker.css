@@ -1,0 +1,120 @@
+.role-picker {
+    position: relative;
+    min-width: 200px;
+}
+
+.role-picker-input-container {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: var(--space-xs);
+    min-height: 38px;
+    padding: var(--space-xs) var(--space-sm);
+    background: var(--color-surface-input);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    cursor: text;
+    transition: border-color var(--transition-fast);
+}
+
+.role-picker-input-container:focus-within {
+    border-color: var(--color-brand-500);
+}
+
+.role-picker-input {
+    flex: 1;
+    min-width: 120px;
+    border: none;
+    background: transparent;
+    color: var(--color-text-primary);
+    font-size: var(--text-sm);
+    outline: none;
+}
+
+.role-picker-input::placeholder {
+    color: var(--color-text-muted);
+}
+
+.role-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-xs);
+    padding: 2px 8px;
+    background: var(--color-surface-muted);
+    border: 1px solid;
+    border-radius: var(--radius-full);
+    font-size: var(--text-sm);
+}
+
+.role-color-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    flex-shrink: 0;
+}
+
+.role-tag-name {
+    color: var(--color-text-primary);
+    font-weight: var(--font-medium);
+}
+
+.role-tag-remove {
+    background: none;
+    border: none;
+    color: var(--color-text-muted);
+    font-size: var(--text-base);
+    cursor: pointer;
+    padding: 0;
+    margin-left: var(--space-xs);
+    line-height: 1;
+}
+
+.role-tag-remove:hover {
+    color: var(--color-text-primary);
+}
+
+/* Dropdown */
+.role-picker-dropdown {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    max-height: 250px;
+    overflow-y: auto;
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-lg);
+    z-index: var(--z-dropdown);
+    margin-top: var(--space-xs);
+}
+
+.role-picker-loading,
+.role-picker-empty {
+    padding: var(--space-md);
+    text-align: center;
+    color: var(--color-text-muted);
+    font-size: var(--text-sm);
+}
+
+.role-picker-option {
+    display: flex;
+    align-items: center;
+    gap: var(--space-sm);
+    width: 100%;
+    padding: var(--space-sm) var(--space-md);
+    background: none;
+    border: none;
+    text-align: left;
+    cursor: pointer;
+    transition: background var(--transition-fast);
+}
+
+.role-picker-option:hover {
+    background: var(--color-surface-muted);
+}
+
+.role-picker-name {
+    color: var(--color-text-primary);
+    font-size: var(--text-sm);
+}

@@ -14,10 +14,16 @@ export const pingCommand: Command = {
     source: 'core',
 
     execute: async (interaction: ChatInputCommandInteraction) => {
-        const sent = await interaction.reply({
+        const response = await interaction.reply({
             content: '🏓 Pinging...',
-            fetchReply: true,
+            withResponse: true,
         });
+
+        const sent = response.resource?.message;
+        if (!sent) {
+            await interaction.editReply('🏓 **Pong!** (Could not measure latency)');
+            return;
+        }
 
         const roundtrip = sent.createdTimestamp - interaction.createdTimestamp;
         const wsLatency = interaction.client.ws.ping;

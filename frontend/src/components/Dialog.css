@@ -1,0 +1,104 @@
+.dialog-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(4px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: var(--z-modal);
+    animation: fadeIn var(--transition-fast) var(--ease-out);
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: scale(0.95) translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+    }
+}
+
+.dialog {
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    padding: var(--space-xl);
+    max-width: 400px;
+    width: 90%;
+    box-shadow: var(--shadow-xl);
+    animation: slideIn var(--transition-base) var(--ease-out);
+}
+
+.dialog.danger {
+    border-color: var(--color-error);
+}
+
+.dialog-title {
+    font-size: var(--text-xl);
+    font-weight: var(--font-bold);
+    color: var(--color-text-primary);
+    margin: 0 0 var(--space-md) 0;
+}
+
+.dialog-message {
+    color: var(--color-text-secondary);
+    margin: 0 0 var(--space-xl) 0;
+    line-height: 1.5;
+}
+
+.dialog-actions {
+    display: flex;
+    gap: var(--space-sm);
+    justify-content: flex-end;
+}
+
+.dialog-actions .btn {
+    min-width: 80px;
+    padding: var(--space-sm) var(--space-lg);
+    font-size: var(--text-sm);
+    font-weight: var(--font-semibold);
+    border-radius: var(--radius-md);
+    cursor: pointer;
+    transition: all var(--transition-fast) var(--ease-out);
+}
+
+.dialog-actions .btn-secondary {
+    background: transparent;
+    border: 1px solid var(--color-border);
+    color: var(--color-text-secondary);
+}
+
+.dialog-actions .btn-secondary:hover {
+    background: var(--color-surface-muted);
+    color: var(--color-text-primary);
+}
+
+.dialog-actions .btn-primary {
+    background: var(--color-brand-500);
+    border: 1px solid var(--color-brand-500);
+    color: white;
+}
+
+.dialog-actions .btn-primary:hover {
+    background: var(--color-brand-600);
+    border-color: var(--color-brand-600);
+}
+
+.dialog-actions .btn-danger {
+    background: var(--color-error);
+    border: 1px solid var(--color-error);
+    color: white;
+}
+
+.dialog-actions .btn-danger:hover {
+    background: #dc2626;
+    border-color: #dc2626;
+}
